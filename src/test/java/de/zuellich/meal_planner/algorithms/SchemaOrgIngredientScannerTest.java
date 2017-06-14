@@ -1,28 +1,25 @@
 package de.zuellich.meal_planner.algorithms;
 
+import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  *
  */
-public class SchemaOrgIngredientScannerTest {
+public class SchemaOrgIngredientScannerTest extends FixtureBasedTest {
 
     @Test
     public void testCanGetIngredientsFromXML() throws IOException, URISyntaxException {
-        String HTMLSource = getResource("/fixtures/ingredientScanner/simple-recipe.html");
+        String HTMLSource = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
 
         IngredientScanner scanner = new SchemaOrgIngredientScanner(HTMLSource, new AmountParser(), IngredientUnitLookup.getInstance());
         List<Ingredient> ingredientList = scanner.getIngredients();
@@ -34,14 +31,6 @@ public class SchemaOrgIngredientScannerTest {
                 actualIngredients,
                 ingredientList);
 
-    }
-
-    private String getResource(String path) {
-        InputStream in = getClass().getResourceAsStream(path);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-        Scanner scanner = new Scanner(in).useDelimiter("\\A");
-        return scanner.hasNext() ? scanner.next() : "";
     }
 
     private List<Ingredient> getSampleIngredients() {
