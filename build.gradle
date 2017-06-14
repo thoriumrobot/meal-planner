@@ -1,0 +1,13 @@
+description = 'A meal planner application backend.'
+version = '1.0'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.10.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
