@@ -11,12 +11,12 @@ public interface FormatDetector {
      * Try to detect a format.
      * @return True if the format is of the given type.
      */
-    public boolean isDetected();
+    boolean isDetected();
 
     /**
      * Return the format supported by this detector.
      * @return A recipe format.
      */
-    public RecipeFormat getFormat();
+    RecipeFormat getFormat();
 
 }

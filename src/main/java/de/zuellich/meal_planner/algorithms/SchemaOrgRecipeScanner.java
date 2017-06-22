@@ -14,15 +14,9 @@ import java.util.List;
  */
 public class SchemaOrgRecipeScanner implements RecipeScanner {
 
-    private String HTMLSource;
-
-    public SchemaOrgRecipeScanner(String HTMLSource) {
-        this.HTMLSource = HTMLSource;
-    }
-
     @Override
-    public Recipe getRecipe() {
-        Document document = Jsoup.parse(HTMLSource);
+    public Recipe parse(String source) {
+        Document document = Jsoup.parse(source);
         Elements recipeRoot = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
 
         String name = parseName(recipeRoot);

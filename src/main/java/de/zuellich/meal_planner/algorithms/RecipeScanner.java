@@ -8,7 +8,9 @@ import de.zuellich.meal_planner.datatypes.Recipe;
 public interface RecipeScanner {
 
     /**
+     * @param source The source to parse.
      * @return A basic recipe instance with name and source information resolved. No ingredients are added.
      */
-    public Recipe getRecipe();
+    Recipe parse(String source);
+
 }

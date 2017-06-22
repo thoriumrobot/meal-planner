@@ -17,23 +17,20 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
 
     private final IngredientUnitLookup ingredientUnitLookup;
     private final AmountParser amountParser;
-    private final String HTMLSource;
 
     /**
      * Create a new instance. Will only parse the source upon calling get.
-     * @param HTMLSource HTMLSource that is parsed for ingredients.
      * @param amountParser Used to parse amounts for the ingredients.
      * @param ingredientUnitLookup Used to lookup the units for an ingredient.
      */
-    public SchemaOrgIngredientScanner(String HTMLSource, AmountParser amountParser, IngredientUnitLookup ingredientUnitLookup) {
-        this.HTMLSource = HTMLSource;
+    public SchemaOrgIngredientScanner(AmountParser amountParser, IngredientUnitLookup ingredientUnitLookup) {
         this.amountParser = amountParser;
         this.ingredientUnitLookup = ingredientUnitLookup;
     }
 
     @Override
-    public List<Ingredient> getIngredients() {
-        Document document = Jsoup.parse(HTMLSource);
+    public List<Ingredient> parse(String source) {
+        Document document = Jsoup.parse(source);
         Elements ingredients = document.getElementsByAttributeValue("itemprop", "recipeIngredient");
 
         List<Ingredient> result = new ArrayList<>(ingredients.size());

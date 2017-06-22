@@ -64,6 +64,15 @@ public class Recipe {
         return source;
     }
 
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                ", source='" + source + '\'' +
+                '}';
+    }
+
     public void setSource(String source) {
         this.source = source;
     }

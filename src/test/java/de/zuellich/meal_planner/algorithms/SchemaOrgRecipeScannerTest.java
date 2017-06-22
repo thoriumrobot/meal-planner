@@ -14,8 +14,8 @@ public class SchemaOrgRecipeScannerTest extends FixtureBasedTest {
     @Test
     public void testCanRetrieveBasicInformationFromRecipe() {
         String fixture = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
-        RecipeScanner instance = new SchemaOrgRecipeScanner(fixture);
-        Recipe recipe = instance.getRecipe();
+        RecipeScanner instance = new SchemaOrgRecipeScanner();
+        Recipe recipe = instance.parse(fixture);
 
         assertEquals("The scanner returns the name of the recipe.", "Quick Teriyaki Chicken Rice Bowls", recipe.getName());
         assertTrue("The scanner does not provide the ingredients.", recipe.getIngredients().isEmpty());
@@ -27,8 +27,8 @@ public class SchemaOrgRecipeScannerTest extends FixtureBasedTest {
     @Test
     public void testReturnEmptyURLIfNotIncludedInSite() {
         String fixture = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
-        RecipeScanner instance = new SchemaOrgRecipeScanner(fixture);
-        Recipe recipe = instance.getRecipe();
+        RecipeScanner instance = new SchemaOrgRecipeScanner();
+        Recipe recipe = instance.parse(fixture);
 
         assertEquals("The scanner provides an empty string as URL.","", recipe.getSource());
     }

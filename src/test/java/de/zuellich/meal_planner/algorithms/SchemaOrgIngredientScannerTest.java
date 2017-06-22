@@ -21,8 +21,8 @@ public class SchemaOrgIngredientScannerTest extends FixtureBasedTest {
     public void testCanGetIngredientsFromXML() throws IOException, URISyntaxException {
         String HTMLSource = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
 
-        IngredientScanner scanner = new SchemaOrgIngredientScanner(HTMLSource, new AmountParser(), IngredientUnitLookup.getInstance());
-        List<Ingredient> ingredientList = scanner.getIngredients();
+        IngredientScanner scanner = new SchemaOrgIngredientScanner(new AmountParser(), IngredientUnitLookup.getInstance());
+        List<Ingredient> ingredientList = scanner.parse(HTMLSource);
 
         List<Ingredient> actualIngredients = getSampleIngredients();
 
