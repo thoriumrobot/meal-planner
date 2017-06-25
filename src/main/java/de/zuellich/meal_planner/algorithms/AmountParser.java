@@ -1,11 +1,14 @@
 package de.zuellich.meal_planner.algorithms;
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  *
  */
+@Service
 public class AmountParser {
 
     /**

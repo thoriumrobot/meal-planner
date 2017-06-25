@@ -1,12 +1,14 @@
 package de.zuellich.meal_planner.algorithms;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 /**
  * Entry point to parsing a source.
  */
+@Service
 public class RecipeParserFactory {
 
     private final Set<FormatDetector> formatDetectors;

@@ -1,6 +1,7 @@
 package de.zuellich.meal_planner.algorithms;
 
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 /**
  *
  */
+@Service
 public class IngredientUnitLookup {
 
     private static IngredientUnitLookup instance;
