@@ -4,24 +4,22 @@ import de.zuellich.meal_planner.datatypes.RecipeFormat;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  */
 public class SchemaOrgFormatDetector implements FormatDetector {
 
-    private final String htmlSource;
+    private RecipeParser parser;
 
-    /**
-     * Try to recognize the HTMLSource as using Schema.org formats.
-     * @param HTMLSource The HTML source to parse a recipe from.
-     */
-    public SchemaOrgFormatDetector(String HTMLSource) {
-        htmlSource = HTMLSource;
+    @Autowired
+    public SchemaOrgFormatDetector(SchemaOrgParser parser) {
+        this.parser = parser;
     }
 
     @Override
-    public boolean isDetected() {
+    public boolean isSupported(String htmlSource) {
         Document document = Jsoup.parse(htmlSource);
         boolean isWprmRecipe = canFindWprmRecipe(document);
         boolean hasSchemaOrgAnnotation = canFindSchemaOrgAnnotation(document);
@@ -51,6 +49,11 @@ public class SchemaOrgFormatDetector implements FormatDetector {
     @Override
     public RecipeFormat getFormat() {
         return RecipeFormat.SCHEMA_ORG;
+    }
+
+    @Override
+    public RecipeParser getParserInstance() {
+        return parser;
     }
 
 }
