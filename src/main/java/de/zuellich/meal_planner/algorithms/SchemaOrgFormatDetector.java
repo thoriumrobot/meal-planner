@@ -30,6 +30,7 @@ public class SchemaOrgFormatDetector implements FormatDetector {
 
     /**
      * Try to find the schema.org recipe annotation.
+     *
      * @param document The recipes as jsoup document.
      * @return True if we found the schema.org recipe annotation.
      */
@@ -40,6 +41,7 @@ public class SchemaOrgFormatDetector implements FormatDetector {
 
     /**
      * Try to find hints for a wprm "annotated" recipe.
+     *
      * @param document The recipe as jsoup document.
      * @return True if we found an element with an wprm-recipe class.
      */

@@ -27,6 +27,7 @@ public class AmountParser {
     /**
      * Convert the string value into a float value. Can resolve very basic fractions. If the fraction
      * is unknown it will return 0.
+     *
      * @param raw The raw value. Might be "1" or "1/8".
      * @return Returns the converted value or in case of an unknown fraction, empty string or null 0.
      */
@@ -44,6 +45,7 @@ public class AmountParser {
 
     /**
      * Resolve a fraction by looking it up in the static storage. Returns 0 if not found.
+     *
      * @param raw The raw string like 1/8.
      * @return The value of the fraction or 0.
      */
@@ -51,7 +53,7 @@ public class AmountParser {
         Float value = fractionLookup.get(raw);
 
         if (value == null) {
-           return 0f;
+            return 0f;
         } else {
             return value;
         }

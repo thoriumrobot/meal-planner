@@ -5,7 +5,6 @@ import de.zuellich.meal_planner.datatypes.Recipe;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -31,6 +30,7 @@ public class SchemaOrgRecipeScanner implements RecipeScanner {
 
     /**
      * Try to extract the URL for the given recipe. If no itemprop of type URL is found inside the recipe returns null.
+     *
      * @param recipeRoot The element surrounding the recipes itemprops.
      * @return The URL of the recipe or an empty string if none found.
      */
@@ -45,6 +45,7 @@ public class SchemaOrgRecipeScanner implements RecipeScanner {
 
     /**
      * Try an extract the recipes name.
+     *
      * @param recipeRoot The elements that wrap the recipes itemprops.
      * @return A string containing the recipe name or an empty string in case no name could be resolved.
      */

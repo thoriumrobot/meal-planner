@@ -17,7 +17,15 @@ public class IngredientUnitLookup {
     private Map<String, IngredientUnit> byShorthand;
 
     /**
+     * Create a new instance and setup the lookup table.
+     */
+    private IngredientUnitLookup() {
+        setupLookupTable();
+    }
+
+    /**
      * Get an instance.
+     *
      * @return The new instance.
      */
     public static IngredientUnitLookup getInstance() {
@@ -26,13 +34,6 @@ public class IngredientUnitLookup {
         }
 
         return instance;
-    }
-
-    /**
-     * Create a new instance and setup the lookup table.
-     */
-    private IngredientUnitLookup() {
-        setupLookupTable();
     }
 
     /**
@@ -48,6 +49,7 @@ public class IngredientUnitLookup {
 
     /**
      * Try to find the unit type by its shorthand.
+     *
      * @param shorthand The shorthand to lookup.
      * @return Null if not found.
      */

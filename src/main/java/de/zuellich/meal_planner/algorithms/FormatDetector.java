@@ -9,12 +9,14 @@ public interface FormatDetector {
 
     /**
      * Try to detect a format.
+     *
      * @return True if the format is of the given type.
      */
     boolean isSupported(String source);
 
     /**
      * Return the format supported by this detector.
+     *
      * @return A recipe format.
      */
     RecipeFormat getFormat();

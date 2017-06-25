@@ -20,11 +20,12 @@ public class RecipeParserFactory {
 
     /**
      * Get a parser instance for the provided source.
+     *
      * @param source The source that is supplied to the format detector.
      * @return A parser instance that can parse the sauce.
      */
     public RecipeParser getParser(String source) {
-        for(FormatDetector formatDetector : formatDetectors) {
+        for (FormatDetector formatDetector : formatDetectors) {
             if (formatDetector.isSupported(source)) {
                 return formatDetector.getParserInstance();
             }

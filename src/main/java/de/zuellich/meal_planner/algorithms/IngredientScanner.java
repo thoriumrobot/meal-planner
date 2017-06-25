@@ -11,6 +11,7 @@ interface IngredientScanner {
 
     /**
      * Get a list of ingredients from the specified source.
+     *
      * @return The list of ingredients parsed or an empty list if none found.
      */
     List<Ingredient> parse(String source);

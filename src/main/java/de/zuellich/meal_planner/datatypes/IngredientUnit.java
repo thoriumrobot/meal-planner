@@ -1,8 +1,5 @@
 package de.zuellich.meal_planner.datatypes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  *
  */

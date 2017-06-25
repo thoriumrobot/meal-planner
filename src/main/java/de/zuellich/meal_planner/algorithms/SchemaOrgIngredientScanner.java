@@ -22,7 +22,8 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
 
     /**
      * Create a new instance. Will only parse the source upon calling get.
-     * @param amountParser Used to parse amounts for the ingredients.
+     *
+     * @param amountParser         Used to parse amounts for the ingredients.
      * @param ingredientUnitLookup Used to lookup the units for an ingredient.
      */
     public SchemaOrgIngredientScanner(AmountParser amountParser, IngredientUnitLookup ingredientUnitLookup) {
