@@ -1,13 +1,34 @@
 description = 'A meal planner application backend.'
 version = '1.0'
 
-apply plugin: 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile 'org.jsoup:jsoup:1.10.2'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+
+jar {
+    baseName = 'meal-planner-app'
+    version = version
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile('org.jsoup:jsoup:1.10.2', 'org.springframework.boot:spring-boot-starter-web')
+    testCompile([group: 'junit', name: 'junit', version: '4.+'], ['org.springframework.boot:spring-boot-starter-test'])
+}
+
