@@ -2,7 +2,6 @@ package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.algorithms.AmountParser;
 import de.zuellich.meal_planner.algorithms.IngredientUnitLookup;
-import de.zuellich.meal_planner.algorithms.SchemaOrgIngredientScanner;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.jsoup.nodes.Document;
@@ -10,7 +9,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

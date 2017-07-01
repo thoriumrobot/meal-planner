@@ -1,6 +1,8 @@
 package de.zuellich.meal_planner.algorithms;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
+import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgFormatDetector;
+import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgParser;
 import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgQuirksModeFormatDetector;
 import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgQuirksModeParser;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;

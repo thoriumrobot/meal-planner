@@ -4,7 +4,6 @@ import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.AmountParser;
 import de.zuellich.meal_planner.algorithms.IngredientUnitLookup;
 import de.zuellich.meal_planner.algorithms.RecipeParser;
-import de.zuellich.meal_planner.algorithms.SchemaOrgRecipeScanner;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.expectations.SchemaOrgExpectations;
 import org.junit.Test;

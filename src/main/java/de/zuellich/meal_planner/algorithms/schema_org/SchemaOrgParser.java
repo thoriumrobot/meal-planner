@@ -1,5 +1,7 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
+import de.zuellich.meal_planner.algorithms.RecipeParser;
+import de.zuellich.meal_planner.algorithms.RecipeScanner;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
@@ -7,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

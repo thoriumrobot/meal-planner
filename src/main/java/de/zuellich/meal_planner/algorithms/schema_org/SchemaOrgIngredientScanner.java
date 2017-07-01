@@ -1,5 +1,8 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
+import de.zuellich.meal_planner.algorithms.AmountParser;
+import de.zuellich.meal_planner.algorithms.IngredientScanner;
+import de.zuellich.meal_planner.algorithms.IngredientUnitLookup;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.jsoup.Jsoup;

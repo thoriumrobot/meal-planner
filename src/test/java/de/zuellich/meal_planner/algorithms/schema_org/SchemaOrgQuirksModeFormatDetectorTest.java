@@ -2,7 +2,6 @@ package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.FormatDetector;
-import de.zuellich.meal_planner.algorithms.SchemaOrgParser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

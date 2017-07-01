@@ -1,6 +1,8 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
+import de.zuellich.meal_planner.algorithms.RecipeScanner;
+import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgRecipeScanner;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import org.junit.Test;
 
