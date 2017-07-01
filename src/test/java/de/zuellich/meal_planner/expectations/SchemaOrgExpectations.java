@@ -43,7 +43,7 @@ public class SchemaOrgExpectations {
         ingredientList.add(new Ingredient("cilantro (optional for the South American Version)", 0.5f, IngredientUnit.BUNCH));
         ingredientList.add(new Ingredient("extra virgin olive oil", 0f, IngredientUnit.NULL));
         ingredientList.add(new Ingredient("large lime or lemon - juiced", 1, IngredientUnit.NULL));
-        ingredientList.add(new Ingredient("garlic", 4, IngredientUnit.NULL));
+        ingredientList.add(new Ingredient("garlic", 4, IngredientUnit.CLOVE));
         ingredientList.add(new Ingredient("sea salt + more to taste", 0.5f, IngredientUnit.TSP));
         ingredientList.add(new Ingredient("chile pepper or a pinch of red pepper flakes", 0.5f, IngredientUnit.NULL));
         ingredientList.add(new Ingredient("fresh oregano leaves", 2, IngredientUnit.TBSP));

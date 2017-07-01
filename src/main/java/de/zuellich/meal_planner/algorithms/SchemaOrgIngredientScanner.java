@@ -51,7 +51,7 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
 
         String type = typeElement.text();
         float amount = amountParser.parseAmount(amountElement.text());
-        IngredientUnit ingredientUnit = ingredientUnitLookup.byShorthand(ingredientElement.text());
+        IngredientUnit ingredientUnit = ingredientUnitLookup.lookup(ingredientElement.text());
 
         return new Ingredient(type, amount, ingredientUnit);
     }
