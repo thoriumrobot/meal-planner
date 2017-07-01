@@ -4,6 +4,7 @@ import de.zuellich.meal_planner.FixtureBasedTest;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -14,11 +15,15 @@ public class SchemaOrgFormatDetectorTest extends FixtureBasedTest {
     @Test
     public void testCanDetectSchemaOrg() {
         SchemaOrgParser parser = mock(SchemaOrgParser.class);
-        String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         FormatDetector detector = new SchemaOrgFormatDetector(parser);
-        boolean isSchemaOrgFormatted = detector.isSupported(source);
 
-        assertTrue(isSchemaOrgFormatted);
+        String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
+        boolean isSchemaOrgFormatted = detector.isSupported(source);
+        assertTrue("Should recognize standard schema.org format." ,isSchemaOrgFormatted);
+
+        source = getResource("/fixtures/ingredientScanner/recipes/schema-org-03.html");
+        isSchemaOrgFormatted = detector.isSupported(source);
+        assertFalse("Should not recognize quirky schema.org format.", isSchemaOrgFormatted);
     }
 
 }

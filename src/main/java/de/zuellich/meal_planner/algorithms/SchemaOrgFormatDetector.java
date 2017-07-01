@@ -34,8 +34,9 @@ public class SchemaOrgFormatDetector implements FormatDetector {
      * @return True if we found the schema.org recipe annotation.
      */
     private boolean canFindSchemaOrgAnnotation(Document document) {
-        Elements elements = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
-        return !elements.isEmpty();
+        Elements recipeElement = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
+        Elements ingredientsElement = document.getElementsByAttributeValue("itemprop", "recipeIngredient");
+        return !recipeElement.isEmpty() && !ingredientsElement.isEmpty();
     }
 
     @Override
