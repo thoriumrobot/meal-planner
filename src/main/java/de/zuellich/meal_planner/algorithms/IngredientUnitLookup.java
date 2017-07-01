@@ -51,10 +51,16 @@ public class IngredientUnitLookup {
      * Try to find the unit type by its shorthand.
      *
      * @param shorthand The shorthand to lookup.
-     * @return Null if not found.
+     * @return IngredientUnit.NULL if not found.
      */
     public IngredientUnit byShorthand(String shorthand) {
-        return byShorthand.get(shorthand);
+        IngredientUnit result = byShorthand.get(shorthand);
+
+        if (result == null) {
+            result = IngredientUnit.NULL;
+        }
+
+        return result;
     }
 
 }

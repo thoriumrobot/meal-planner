@@ -17,4 +17,11 @@ public class IngredientUnitLookupTest {
         assertEquals(IngredientUnit.CUP, cupUnit);
     }
 
+    @Test
+    public void returnNullIngredientUnitInsteadOfNullIfUnitNotRecognized() {
+        IngredientUnitLookup instance = IngredientUnitLookup.getInstance();
+        IngredientUnit actual = instance.byShorthand("notAnUnitActually");
+        assertEquals(IngredientUnit.NULL, actual);
+    }
+
 }
