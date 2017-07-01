@@ -11,7 +11,8 @@ public enum IngredientUnit {
     CUP("cup", "cups", "cup"),
     TBSP("tablespoon", "tablespoons", "tbsp"),
     TSP("teaspoon", "teaspoons", "tsp"),
-    CLOVES("clove", "cloves", "clove");
+    CLOVES("clove", "cloves", "clove"),
+    BUNCH("bunch", "bunches", "bunch");
 
     private final String singular;
     private final String plural;

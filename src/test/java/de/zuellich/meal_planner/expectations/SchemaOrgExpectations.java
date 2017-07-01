@@ -5,6 +5,7 @@ import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import de.zuellich.meal_planner.datatypes.Recipe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +32,22 @@ public class SchemaOrgExpectations {
         ingredientList.add(new Ingredient("cornstarch", 1, IngredientUnit.TBSP));
         ingredientList.add(new Ingredient("rice", 0, IngredientUnit.NULL));
         ingredientList.add(new Ingredient("steamed broccoli", 0, IngredientUnit.NULL));
+
+        return new Recipe(name, ingredientList, url);
+    }
+
+    public static Recipe getSchemaOrg02() {
+        String name = "Best Chimichurri Sauce";
+        String url = "";
+        List<Ingredient> ingredientList = new ArrayList<>();
+        ingredientList.add(new Ingredient("flat leaf parsley", 1, IngredientUnit.BUNCH));
+        ingredientList.add(new Ingredient("cilantro (optional for the South American Version)", 0.5f, IngredientUnit.BUNCH));
+        ingredientList.add(new Ingredient("extra virgin olive oil", 0f, IngredientUnit.NULL));
+        ingredientList.add(new Ingredient("large lime or lemon - juiced", 1, IngredientUnit.NULL));
+        ingredientList.add(new Ingredient("garlic", 4, IngredientUnit.NULL));
+        ingredientList.add(new Ingredient("sea salt + more to taste", 0.5f, IngredientUnit.TSP));
+        ingredientList.add(new Ingredient("chile pepper or a pinch of red pepper flakes", 0.5f, IngredientUnit.NULL));
+        ingredientList.add(new Ingredient("fresh oregano leaves", 2, IngredientUnit.TBSP));
 
         return new Recipe(name, ingredientList, url);
     }

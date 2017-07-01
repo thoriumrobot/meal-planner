@@ -18,10 +18,16 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class SchemaOrgParserTest extends FixtureBasedTest {
 
+    /**
+     * The base path to the recipe fixtures.
+     */
+    private static final String recipeFixtureBasePath = "/fixtures/ingredientScanner/recipes";
+
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {"/fixtures/ingredientScanner/recipes/schema-org-01.html", SchemaOrgExpectations.getSchemaOrg01() }
+                {recipeFixtureBasePath + "/schema-org-01.html", SchemaOrgExpectations.getSchemaOrg01() },
+                {recipeFixtureBasePath + "/schema-org-02.html", SchemaOrgExpectations.getSchemaOrg02() }
         });
     }
 
