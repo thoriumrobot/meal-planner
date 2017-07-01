@@ -41,7 +41,7 @@ public class SchemaOrgIngredientScannerTest extends FixtureBasedTest {
         sampleIngredients.add(new Ingredient("low-sodium soy sauce", 0.25f, IngredientUnit.CUP));
         sampleIngredients.add(new Ingredient("rice or apple cider vinegar", 2, IngredientUnit.TBSP));
         sampleIngredients.add(new Ingredient("ground ginger", 0.5f, IngredientUnit.TSP));
-        sampleIngredients.add(new Ingredient("garlic", 2, IngredientUnit.CLOVES));
+        sampleIngredients.add(new Ingredient("garlic", 2, IngredientUnit.CLOVE));
         sampleIngredients.add(new Ingredient("cornstarch", 1, IngredientUnit.TBSP));
         sampleIngredients.add(new Ingredient("rice", 0, IngredientUnit.NULL));
         sampleIngredients.add(new Ingredient("steamed broccoli", 0, IngredientUnit.NULL));

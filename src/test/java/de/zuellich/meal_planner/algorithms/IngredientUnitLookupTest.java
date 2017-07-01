@@ -26,17 +26,17 @@ public class IngredientUnitLookupTest {
 
     @Test
     public void canLookupByUnitPlural() {
-        IngredientUnit cloveUnit = instance.byPlural(IngredientUnit.CLOVES.getPlural());
-        assertEquals(IngredientUnit.CLOVES, cloveUnit);
+        IngredientUnit cloveUnit = instance.byPlural(IngredientUnit.CLOVE.getPlural());
+        assertEquals(IngredientUnit.CLOVE, cloveUnit);
     }
 
     @Test
     public void canLookupChained() {
-        IngredientUnit cloveUnit = instance.lookup(IngredientUnit.CLOVES.getShorthand());
-        assertEquals("Search the shorthand for an ingredient", IngredientUnit.CLOVES, cloveUnit);
+        IngredientUnit cloveUnit = instance.lookup(IngredientUnit.CLOVE.getShorthand());
+        assertEquals("Search the shorthand for an ingredient", IngredientUnit.CLOVE, cloveUnit);
 
-        cloveUnit = instance.lookup(IngredientUnit.CLOVES.getPlural());
-        assertEquals("Search the plural for an ingredient", IngredientUnit.CLOVES, cloveUnit);
+        cloveUnit = instance.lookup(IngredientUnit.CLOVE.getPlural());
+        assertEquals("Search the plural for an ingredient", IngredientUnit.CLOVE, cloveUnit);
     }
 
     @Test

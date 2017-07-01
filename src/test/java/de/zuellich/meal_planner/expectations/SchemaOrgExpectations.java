@@ -5,7 +5,6 @@ import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import de.zuellich.meal_planner.datatypes.Recipe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class SchemaOrgExpectations {
         ingredientList.add(new Ingredient("low-sodium soy sauce", 0.25f, IngredientUnit.CUP));
         ingredientList.add(new Ingredient("rice or apple cider vinegar", 2, IngredientUnit.TBSP));
         ingredientList.add(new Ingredient("ground ginger", 0.5f, IngredientUnit.TSP));
-        ingredientList.add(new Ingredient("garlic", 2, IngredientUnit.CLOVES));
+        ingredientList.add(new Ingredient("garlic", 2, IngredientUnit.CLOVE));
         ingredientList.add(new Ingredient("cornstarch", 1, IngredientUnit.TBSP));
         ingredientList.add(new Ingredient("rice", 0, IngredientUnit.NULL));
         ingredientList.add(new Ingredient("steamed broccoli", 0, IngredientUnit.NULL));
