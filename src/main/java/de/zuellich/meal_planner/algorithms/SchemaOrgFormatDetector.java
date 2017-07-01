@@ -23,9 +23,7 @@ public class SchemaOrgFormatDetector implements FormatDetector {
     @Override
     public boolean isSupported(String htmlSource) {
         Document document = Jsoup.parse(htmlSource);
-        boolean isWprmRecipe = canFindWprmRecipe(document);
-        boolean hasSchemaOrgAnnotation = canFindSchemaOrgAnnotation(document);
-        return isWprmRecipe && hasSchemaOrgAnnotation;
+        return canFindSchemaOrgAnnotation(document);
     }
 
     /**
@@ -36,17 +34,6 @@ public class SchemaOrgFormatDetector implements FormatDetector {
      */
     private boolean canFindSchemaOrgAnnotation(Document document) {
         Elements elements = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
-        return !elements.isEmpty();
-    }
-
-    /**
-     * Try to find hints for a wprm "annotated" recipe.
-     *
-     * @param document The recipe as jsoup document.
-     * @return True if we found an element with an wprm-recipe class.
-     */
-    private boolean canFindWprmRecipe(Document document) {
-        Elements elements = document.getElementsByAttributeValueContaining("class", "wprm-recipe");
         return !elements.isEmpty();
     }
 
