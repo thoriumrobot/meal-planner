@@ -12,6 +12,7 @@ public class FixtureBasedTest {
 
     /**
      * Load a fixture from the resources.
+     *
      * @param path Supply a path that can be resolved from the resources. Example "/folder-in-resources/file".
      * @return The parsed file or an empty string.
      */

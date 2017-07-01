@@ -71,6 +71,7 @@ public class IngredientUnitLookup {
 
     /**
      * Try to find the unit type by its plural form.
+     *
      * @param plural The string that supposedly is plural.
      * @return IngredientUnit.NULL if not found.
      */
@@ -86,6 +87,7 @@ public class IngredientUnitLookup {
 
     /**
      * Try to find an unit by looking up search string in all search maps.
+     *
      * @param search The string to search. Can be shorthand or plural.
      * @return IngredientUnit.NULL if not found.
      */
@@ -105,6 +107,7 @@ public class IngredientUnitLookup {
 
     /**
      * Find an ingredient unit by its singular representation.
+     *
      * @param search The search string that should be the singular representation of the unit you look for.
      * @return IngredientUnit.NULL if none found.
      */

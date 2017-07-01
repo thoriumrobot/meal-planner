@@ -13,7 +13,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -25,20 +25,17 @@ public class SchemaOrgQuirksModeParserTest extends FixtureBasedTest {
      * The base path to the recipe fixtures.
      */
     private static final String recipeFixtureBasePath = "/fixtures/ingredientScanner/recipes";
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {recipeFixtureBasePath + "/schema-org-03.html", SchemaOrgExpectations.getSchemaOrg03() },
-        });
-    }
-
     @Parameterized.Parameter
     public String recipeSourcePath;
-
     @Parameterized.Parameter(1)
     public Recipe expectedRecipe;
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {recipeFixtureBasePath + "/schema-org-03.html", SchemaOrgExpectations.getSchemaOrg03()},
+        });
+    }
 
     @Test
     public void canParseQuirkySchemaOrgRecipes() {

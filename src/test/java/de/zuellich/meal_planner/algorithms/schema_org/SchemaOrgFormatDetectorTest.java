@@ -2,11 +2,10 @@ package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.FormatDetector;
-import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgFormatDetector;
-import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgParser;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -21,7 +20,7 @@ public class SchemaOrgFormatDetectorTest extends FixtureBasedTest {
 
         String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         boolean isSchemaOrgFormatted = detector.isSupported(source);
-        assertTrue("Should recognize standard schema.org format." ,isSchemaOrgFormatted);
+        assertTrue("Should recognize standard schema.org format.", isSchemaOrgFormatted);
 
         source = getResource("/fixtures/ingredientScanner/recipes/schema-org-03.html");
         isSchemaOrgFormatted = detector.isSupported(source);

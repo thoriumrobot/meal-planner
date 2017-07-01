@@ -15,6 +15,7 @@ public class SchemaOrgExpectations {
 
     /**
      * Return the expected recipe instance for the first recipe.
+     *
      * @return The expected instance representing a recipe.
      */
     public static Recipe getSchemaOrg01() {

@@ -9,9 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +50,7 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
     /**
      * Extract a list of ingredient elements from the given document. This method should be overwritten by other parsers
      * that require a different selector to be used.
+     *
      * @param document The document to extract ingredients from.
      * @return An empty Elements if none found.
      */
@@ -61,6 +60,7 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
 
     /**
      * Method is called to extract an Ingredient instance from the elements gathered by getIngredientElements.
+     *
      * @param ingredient The element representing an element.
      * @return An ingredient instance.
      */
