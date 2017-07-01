@@ -67,4 +67,10 @@ public class SchemaOrgExpectations {
 
         return ingredientList;
     }
+
+    public static Recipe getSchemaOrg03() {
+        String name = "Tomato Beef Country Casserole";
+        String url = "";
+        return new Recipe(name, getIngredients03(), url);
+    }
 }

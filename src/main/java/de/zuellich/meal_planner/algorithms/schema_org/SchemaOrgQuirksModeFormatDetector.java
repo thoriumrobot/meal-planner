@@ -7,10 +7,12 @@ import de.zuellich.meal_planner.datatypes.RecipeFormat;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 /**
  *
  */
+@Service
 public class SchemaOrgQuirksModeFormatDetector implements FormatDetector {
 
     private final SchemaOrgParser parser;
@@ -29,7 +31,7 @@ public class SchemaOrgQuirksModeFormatDetector implements FormatDetector {
 
     @Override
     public RecipeFormat getFormat() {
-        return RecipeFormat.SCHEMA_ORG;
+        return RecipeFormat.SCHEMA_ORG_QUIRCKS_MODE;
     }
 
     @Override

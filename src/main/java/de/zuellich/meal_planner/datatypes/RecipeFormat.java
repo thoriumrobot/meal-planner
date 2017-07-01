@@ -7,6 +7,6 @@ public enum RecipeFormat {
 
     SCHEMA_ORG,
     UNKNOWN,
-    NULL
+    SCHEMA_ORG_QUIRCKS_MODE, NULL
 
 }

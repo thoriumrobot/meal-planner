@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  *
  */
@@ -49,4 +51,16 @@ public class SchemaOrgFormatDetector implements FormatDetector {
         return parser;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SchemaOrgFormatDetector that = (SchemaOrgFormatDetector) o;
+        return Objects.equals(parser, that.parser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(parser);
+    }
 }
