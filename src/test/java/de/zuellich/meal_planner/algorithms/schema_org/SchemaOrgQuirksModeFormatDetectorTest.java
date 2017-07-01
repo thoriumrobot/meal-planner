@@ -15,7 +15,7 @@ public class SchemaOrgQuirksModeFormatDetectorTest extends FixtureBasedTest {
 
     @Test
     public void recognizesQuirkySchemaOrgFormat() {
-        SchemaOrgParser parser = mock(SchemaOrgParser.class);
+        SchemaOrgQuirksModeParser parser = mock(SchemaOrgQuirksModeParser.class);
         FormatDetector formatDetector = new SchemaOrgQuirksModeFormatDetector(parser);
 
         String recipeSource = getResource("/fixtures/ingredientScanner/recipes/schema-org-03.html");
