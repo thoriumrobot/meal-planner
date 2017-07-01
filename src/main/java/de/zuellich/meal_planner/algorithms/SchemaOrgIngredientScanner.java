@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,14 +16,14 @@ import java.util.List;
 /**
  * Returns a list of ingredients based on XML.
  */
-@Service
+@Component
 public class SchemaOrgIngredientScanner implements IngredientScanner {
 
     private final IngredientUnitLookup ingredientUnitLookup;
     private final AmountParser amountParser;
 
     /**
-     * Create a new instance. Will only parse the source upon calling get.
+     * Create a new instance.
      *
      * @param amountParser         Used to parse amounts for the ingredients.
      * @param ingredientUnitLookup Used to lookup the units for an ingredient.
@@ -34,7 +36,7 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
     @Override
     public List<Ingredient> parse(String source) {
         Document document = Jsoup.parse(source);
-        Elements ingredients = document.getElementsByAttributeValue("itemprop", "recipeIngredient");
+        Elements ingredients = getIngredientElements(document);
 
         List<Ingredient> result = new ArrayList<>(ingredients.size());
         for (Element ingredient : ingredients) {
@@ -44,7 +46,22 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
         return result;
     }
 
-    private Ingredient parseIngredient(Element ingredient) {
+    /**
+     * Extract a list of ingredient elements from the given document. This method should be overwritten by other parsers
+     * that require a different selector to be used.
+     * @param document The document to extract ingredients from.
+     * @return An empty Elements if none found.
+     */
+    protected Elements getIngredientElements(Document document) {
+        return document.getElementsByAttributeValue("itemprop", "recipeIngredient");
+    }
+
+    /**
+     * Method is called to extract an Ingredient instance from the elements gathered by getIngredientElements.
+     * @param ingredient The element representing an element.
+     * @return An ingredient instance.
+     */
+    protected Ingredient parseIngredient(Element ingredient) {
         Elements typeElement = ingredient.select(".wprm-recipe-ingredient-name");
         Elements amountElement = ingredient.select(".wprm-recipe-ingredient-amount");
         Elements ingredientElement = ingredient.select(".wprm-recipe-ingredient-unit");
@@ -56,4 +73,11 @@ public class SchemaOrgIngredientScanner implements IngredientScanner {
         return new Ingredient(type, amount, ingredientUnit);
     }
 
+    public IngredientUnitLookup getIngredientUnitLookup() {
+        return ingredientUnitLookup;
+    }
+
+    public AmountParser getAmountParser() {
+        return amountParser;
+    }
 }

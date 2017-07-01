@@ -4,8 +4,10 @@ import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,10 +18,11 @@ public class SchemaOrgParser implements RecipeParser {
 
     private final RecipeScanner recipeScanner;
 
-    private final IngredientScanner ingredientScanner;
+    private final SchemaOrgIngredientScanner ingredientScanner;
 
     @Autowired
-    public SchemaOrgParser(RecipeScanner recipeScanner, IngredientScanner ingredientScanner) {
+    public SchemaOrgParser(SchemaOrgRecipeScanner recipeScanner,
+                           @Qualifier("schemaOrgIngredientScanner") SchemaOrgIngredientScanner ingredientScanner) {
         this.recipeScanner = recipeScanner;
         this.ingredientScanner = ingredientScanner;
     }

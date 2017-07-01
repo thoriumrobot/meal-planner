@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchemaOrgFormatDetector implements FormatDetector {
 
+    @Autowired
     private RecipeParser parser;
 
-    @Autowired
     public SchemaOrgFormatDetector(SchemaOrgParser parser) {
         this.parser = parser;
     }
