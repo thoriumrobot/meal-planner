@@ -13,7 +13,7 @@ public class SchemaOrgRecipeScannerTest extends FixtureBasedTest {
 
     @Test
     public void testCanRetrieveBasicInformationFromRecipe() {
-        String fixture = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
+        String fixture = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         RecipeScanner instance = new SchemaOrgRecipeScanner();
         Recipe recipe = instance.parse(fixture);
 
@@ -26,7 +26,7 @@ public class SchemaOrgRecipeScannerTest extends FixtureBasedTest {
      */
     @Test
     public void testReturnEmptyURLIfNotIncludedInSite() {
-        String fixture = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
+        String fixture = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         RecipeScanner instance = new SchemaOrgRecipeScanner();
         Recipe recipe = instance.parse(fixture);
 

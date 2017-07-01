@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
- * A simple base class that allows us to easily parse our fixtures.
+ * A simple base class that allows us to easily parse our expectations.
  */
 public class FixtureBasedTest {
 

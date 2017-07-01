@@ -14,7 +14,7 @@ public class SchemaOrgFormatDetectorTest extends FixtureBasedTest {
     @Test
     public void testCanDetectSchemaOrg() {
         SchemaOrgParser parser = mock(SchemaOrgParser.class);
-        String source = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
+        String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         FormatDetector detector = new SchemaOrgFormatDetector(parser);
         boolean isSchemaOrgFormatted = detector.isSupported(source);
 

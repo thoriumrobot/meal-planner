@@ -27,7 +27,7 @@ public class RecipeParserFactoryTest extends FixtureBasedTest {
 
     @Test
     public void returnsSchemaOrgParser() {
-        String source = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
+        String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
         RecipeParserFactory factory = getInstance();
         RecipeParser actualParser = factory.getParser(source);
         assertEquals(RecipeFormat.SCHEMA_ORG, actualParser.getFormat());

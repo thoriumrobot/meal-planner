@@ -1,24 +1,45 @@
 package de.zuellich.meal_planner.algorithms;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
-import de.zuellich.meal_planner.datatypes.Ingredient;
-import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import de.zuellich.meal_planner.datatypes.Recipe;
+import de.zuellich.meal_planner.expectations.SchemaOrgExpectations;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  *
  */
+@RunWith(Parameterized.class)
 public class SchemaOrgParserTest extends FixtureBasedTest {
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {"/fixtures/ingredientScanner/recipes/schema-org-01.html", SchemaOrgExpectations.getSchemaOrg01() }
+        });
+    }
+
+    /**
+     * Parameter with the path to the recipe to load.
+     */
+    @Parameterized.Parameter
+    public String inputRecipePath;
+
+    /**
+     * Parameter with a configured instance of Recipe that should match.
+     */
+    @Parameterized.Parameter(1)
+    public Recipe expectedRecipe;
 
     @Test
     public void testCanReturnAProperRecipeInstance() {
-        String source = getResource("/fixtures/ingredientScanner/simple-schema-org.html");
+        String source = getResource(inputRecipePath);
 
         SchemaOrgRecipeScanner recipeScanner = new SchemaOrgRecipeScanner();
         SchemaOrgIngredientScanner ingredientScanner = new SchemaOrgIngredientScanner(
@@ -28,27 +49,7 @@ public class SchemaOrgParserTest extends FixtureBasedTest {
         RecipeParser parser = new SchemaOrgParser(recipeScanner, ingredientScanner);
         Recipe recipe = parser.parse(source);
 
-        assertEquals(getExpected(), recipe);
+        assertEquals(expectedRecipe, recipe);
     }
 
-    /**
-     * @return The expected instance representing a recipe.
-     */
-    private Recipe getExpected() {
-        String name = "Quick Teriyaki Chicken Rice Bowls";
-        String url = "";
-        List<Ingredient> ingredientList = new ArrayList<>();
-        ingredientList.add(new Ingredient("boneless", 1, IngredientUnit.LB));
-        ingredientList.add(new Ingredient("salt and pepper", 0, IngredientUnit.NULL));
-        ingredientList.add(new Ingredient("packed light brown sugar", 0.25f, IngredientUnit.CUP));
-        ingredientList.add(new Ingredient("low-sodium soy sauce", 0.25f, IngredientUnit.CUP));
-        ingredientList.add(new Ingredient("rice or apple cider vinegar", 2, IngredientUnit.TBSP));
-        ingredientList.add(new Ingredient("ground ginger", 0.5f, IngredientUnit.TSP));
-        ingredientList.add(new Ingredient("garlic", 2, IngredientUnit.CLOVES));
-        ingredientList.add(new Ingredient("cornstarch", 1, IngredientUnit.TBSP));
-        ingredientList.add(new Ingredient("rice", 0, IngredientUnit.NULL));
-        ingredientList.add(new Ingredient("steamed broccoli", 0, IngredientUnit.NULL));
-
-        return new Recipe(name, ingredientList, url);
-    }
 }
