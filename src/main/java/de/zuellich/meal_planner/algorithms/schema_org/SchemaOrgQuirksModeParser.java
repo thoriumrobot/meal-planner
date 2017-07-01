@@ -2,10 +2,12 @@ package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  */
+@Service
 public class SchemaOrgQuirksModeParser extends SchemaOrgParser {
 
     @Autowired

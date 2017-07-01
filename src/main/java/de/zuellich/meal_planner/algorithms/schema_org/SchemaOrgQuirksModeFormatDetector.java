@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchemaOrgQuirksModeFormatDetector implements FormatDetector {
 
-    private final SchemaOrgParser parser;
+    private final RecipeParser parser;
 
-    public SchemaOrgQuirksModeFormatDetector(SchemaOrgParser parser) {
+    public SchemaOrgQuirksModeFormatDetector(SchemaOrgQuirksModeParser parser) {
         this.parser = parser;
     }
 
