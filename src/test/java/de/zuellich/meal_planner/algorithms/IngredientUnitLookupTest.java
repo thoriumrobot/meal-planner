@@ -4,7 +4,7 @@ import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -31,12 +31,21 @@ public class IngredientUnitLookupTest {
     }
 
     @Test
-    public void canLookupChained() {
-        IngredientUnit cloveUnit = instance.lookup(IngredientUnit.CLOVE.getShorthand());
-        assertEquals("Search the shorthand for an ingredient", IngredientUnit.CLOVE, cloveUnit);
+    public void canLookupByUnitSingular() {
+        IngredientUnit teaspoonUnit = instance.bySingular(IngredientUnit.TSP.getSingular());
+        assertEquals(IngredientUnit.TSP, teaspoonUnit);
+    }
 
-        cloveUnit = instance.lookup(IngredientUnit.CLOVE.getPlural());
-        assertEquals("Search the plural for an ingredient", IngredientUnit.CLOVE, cloveUnit);
+    @Test
+    public void canLookupChained() {
+        IngredientUnit unit = instance.lookup(IngredientUnit.CLOVE.getShorthand());
+        assertEquals("Search the shorthand for an ingredient", IngredientUnit.CLOVE, unit);
+
+        unit = instance.lookup(IngredientUnit.CLOVE.getPlural());
+        assertEquals("Search the plural for an ingredient", IngredientUnit.CLOVE, unit);
+
+        unit = instance.lookup(IngredientUnit.TSP.getSingular());
+        assertEquals("Search the singular for an ingredient unit", IngredientUnit.TSP, unit);
     }
 
     @Test

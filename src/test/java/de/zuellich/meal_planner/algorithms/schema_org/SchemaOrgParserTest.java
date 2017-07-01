@@ -1,6 +1,9 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
+import de.zuellich.meal_planner.algorithms.AmountParser;
+import de.zuellich.meal_planner.algorithms.IngredientUnitLookup;
+import de.zuellich.meal_planner.algorithms.RecipeParser;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.expectations.SchemaOrgExpectations;
 import org.junit.Test;
@@ -22,26 +25,24 @@ public class SchemaOrgParserTest extends FixtureBasedTest {
      * The base path to the recipe fixtures.
      */
     private static final String recipeFixtureBasePath = "/fixtures/ingredientScanner/recipes";
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {recipeFixtureBasePath + "/schema-org-01.html", SchemaOrgExpectations.getSchemaOrg01() },
-                {recipeFixtureBasePath + "/schema-org-02.html", SchemaOrgExpectations.getSchemaOrg02() }
-        });
-    }
-
     /**
      * Parameter with the path to the recipe to load.
      */
     @Parameterized.Parameter
     public String inputRecipePath;
-
     /**
      * Parameter with a configured instance of Recipe that should match.
      */
     @Parameterized.Parameter(1)
     public Recipe expectedRecipe;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {recipeFixtureBasePath + "/schema-org-01.html", SchemaOrgExpectations.getSchemaOrg01()},
+                {recipeFixtureBasePath + "/schema-org-02.html", SchemaOrgExpectations.getSchemaOrg02()}
+        });
+    }
 
     @Test
     public void testCanReturnAProperRecipeInstance() {

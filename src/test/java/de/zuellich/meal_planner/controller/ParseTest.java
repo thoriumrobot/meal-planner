@@ -48,6 +48,7 @@ public class ParseTest {
 
     /**
      * Create a URL by appending the given parameter to the base URL.
+     *
      * @param append The part to append. Note that the base URL does not contain a trailing slash.
      * @return The constructed URL.
      */

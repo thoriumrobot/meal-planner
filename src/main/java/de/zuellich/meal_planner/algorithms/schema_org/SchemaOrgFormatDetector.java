@@ -1,5 +1,7 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
+import de.zuellich.meal_planner.algorithms.FormatDetector;
+import de.zuellich.meal_planner.algorithms.RecipeParser;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,15 +9,17 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  *
  */
 @Service
 public class SchemaOrgFormatDetector implements FormatDetector {
 
+    @Autowired
     private RecipeParser parser;
 
-    @Autowired
     public SchemaOrgFormatDetector(SchemaOrgParser parser) {
         this.parser = parser;
     }
@@ -33,8 +37,9 @@ public class SchemaOrgFormatDetector implements FormatDetector {
      * @return True if we found the schema.org recipe annotation.
      */
     private boolean canFindSchemaOrgAnnotation(Document document) {
-        Elements elements = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
-        return !elements.isEmpty();
+        Elements recipeElement = document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
+        Elements ingredientsElement = document.getElementsByAttributeValue("itemprop", "recipeIngredient");
+        return !recipeElement.isEmpty() && !ingredientsElement.isEmpty();
     }
 
     @Override
@@ -47,4 +52,16 @@ public class SchemaOrgFormatDetector implements FormatDetector {
         return parser;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SchemaOrgFormatDetector that = (SchemaOrgFormatDetector) o;
+        return Objects.equals(parser, that.parser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(parser);
+    }
 }

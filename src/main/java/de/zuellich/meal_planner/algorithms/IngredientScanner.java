@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Scans a list of ingredients.
  */
-interface IngredientScanner {
+public interface IngredientScanner {
 
     /**
      * Get a list of ingredients from the specified source.

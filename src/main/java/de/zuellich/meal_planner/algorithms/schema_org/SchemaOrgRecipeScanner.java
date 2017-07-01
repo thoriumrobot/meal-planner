@@ -1,5 +1,6 @@
-package de.zuellich.meal_planner.algorithms;
+package de.zuellich.meal_planner.algorithms.schema_org;
 
+import de.zuellich.meal_planner.algorithms.RecipeScanner;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import org.jsoup.Jsoup;
