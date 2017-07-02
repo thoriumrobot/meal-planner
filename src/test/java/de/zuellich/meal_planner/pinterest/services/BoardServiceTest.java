@@ -3,6 +3,7 @@ package de.zuellich.meal_planner.pinterest.services;
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.MealPlanner;
 import de.zuellich.meal_planner.pinterest.datatypes.Board;
+import de.zuellich.meal_planner.pinterest.datatypes.Pin;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,17 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
  */
 public class BoardServiceTest extends FixtureBasedTest {
 
+    /**
+     * Get a ready set up instance of the BoardService.
+     * @param restTemplate The RestTemplate instance to inject.
+     * @return The service instance.
+     */
+    private BoardService getBoardService(RestTemplate restTemplate) {
+        RestTemplateBuilder mockBuilder = mock(RestTemplateBuilder.class);
+        when(mockBuilder.build()).thenReturn(restTemplate);
+        return new BoardService(mockBuilder);
+    }
+
     @Test
     public void returnsUsersBoards() {
         final String accessToken = "abcdef";
@@ -40,9 +52,7 @@ public class BoardServiceTest extends FixtureBasedTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(responseJSON, MediaType.APPLICATION_JSON));
 
-        RestTemplateBuilder mockBuilder = mock(RestTemplateBuilder.class);
-        when(mockBuilder.build()).thenReturn(restTemplate);
-        BoardService service = new BoardService(mockBuilder);
+        BoardService service = getBoardService(restTemplate);
         List<Board> boards = service.getBoards(accessToken);
 
         server.verify();
@@ -57,6 +67,29 @@ public class BoardServiceTest extends FixtureBasedTest {
         assertEquals("https://www.pinterest.com/auser/board2/", board.getUrl());
         assertEquals("2", board.getId());
         assertEquals("Board2", board.getName());
+    }
+
+    @Test
+    public void returnsBoardsPins() {
+        final String accessToken = "abcdef";
+        final String boardId = "111111111111111111";
+        final String responseJSON = getResource("/fixtures/pinterest/responses/v1/board_pins.json");
+
+        RestTemplate restTemplate = new RestTemplate();
+        MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
+        server.expect(requestTo("https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link&access_token=abcdef"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(responseJSON, MediaType.APPLICATION_JSON));
+
+        BoardService service = getBoardService(restTemplate);
+        List<Pin> pins = service.getPins(boardId, accessToken);
+
+        server.verify();
+        assertEquals("5 pins are returned", 5, pins.size());
+        for (Pin pin : pins) {
+            assertFalse("Pin's id should be set.", pin.getId().isEmpty());
+            assertFalse("Pin's link should be set.", pin.getLink().isEmpty());
+        }
     }
 
 }
