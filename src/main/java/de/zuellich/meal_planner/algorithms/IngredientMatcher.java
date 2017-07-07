@@ -2,6 +2,7 @@ package de.zuellich.meal_planner.algorithms;
 
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Class implements a matching behaviour for a text description of ingredients.
  */
+@Service
 public class IngredientMatcher {
 
     /**
@@ -76,7 +78,7 @@ public class IngredientMatcher {
     /**
      * Class represents the result of a match operation.
      */
-    class IngredientMatcherResult {
+    public class IngredientMatcherResult {
 
         private final String amount;
 

@@ -2,6 +2,7 @@ package de.zuellich.meal_planner.algorithms.schema_org;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.AmountParser;
+import de.zuellich.meal_planner.algorithms.IngredientMatcher;
 import de.zuellich.meal_planner.algorithms.IngredientUnitLookup;
 import de.zuellich.meal_planner.algorithms.RecipeParser;
 import de.zuellich.meal_planner.datatypes.Recipe;
@@ -39,10 +40,13 @@ public class SchemaOrgQuirksModeParserTest extends FixtureBasedTest {
 
     @Test
     public void canParseQuirkySchemaOrgRecipes() {
+        IngredientUnitLookup ingredientUnitLookup = IngredientUnitLookup.getInstance();
+
         SchemaOrgRecipeScanner recipeScanner = new SchemaOrgRecipeScanner();
         SchemaOrgQuirksModeIngredientScanner ingredientScanner = new SchemaOrgQuirksModeIngredientScanner(
                 new AmountParser(),
-                IngredientUnitLookup.getInstance());
+                ingredientUnitLookup,
+                new IngredientMatcher(ingredientUnitLookup));
 
         RecipeParser parser = new SchemaOrgQuirksModeParser(recipeScanner, ingredientScanner);
 
