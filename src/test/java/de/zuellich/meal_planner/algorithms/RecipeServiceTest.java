@@ -3,10 +3,18 @@ package de.zuellich.meal_planner.algorithms;
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgParser;
 import de.zuellich.meal_planner.datatypes.Recipe;
+import de.zuellich.meal_planner.exception.RecipeParseException;
 import de.zuellich.meal_planner.expectations.SchemaOrgExpectations;
+import org.jsoup.Jsoup;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,15 +25,33 @@ import static org.mockito.Mockito.when;
 public class RecipeServiceTest extends FixtureBasedTest {
 
     @Test
-    public void returnsRecipeForSource() {
-        Recipe expected = SchemaOrgExpectations.getSchemaOrg01();
-        RecipeParserFactory parserFactory = getMockedParserFactory(expected);
+    public void returnsRecipeForSource() throws IOException {
+        String url = "";
+        String fixture = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
 
-        String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
-        RecipeService service = new RecipeService(parserFactory);
-        Recipe result = service.getRecipe(source);
+        Recipe expected = SchemaOrgExpectations.getSchemaOrg01();
+        RecipeParserFactory mockedParserFactory = getMockedParserFactory(expected);
+
+        RecipeFetcherService mockedFetcherService = mock(RecipeFetcherService.class);
+        when(mockedFetcherService.fetchByURL(anyString())).thenReturn(fixture);
+
+        RecipeService service = new RecipeService(mockedParserFactory, mockedFetcherService);
+        Recipe result = service.fromURL(url);
 
         assertEquals(expected, result);
+    }
+
+    @Test(expected = RecipeParseException.class)
+    public void throwsExceptionOnError() throws IOException {
+        // Create a fetcher service that throws an IOException
+        RecipeFetcherService mockedFetcherService = mock(RecipeFetcherService.class);
+        when(mockedFetcherService.fetchByURL(anyString())).thenThrow(new IOException());
+
+        RecipeParserFactory factory = getMockedParserFactory(null);
+        RecipeService service = new RecipeService(factory, mockedFetcherService);
+
+        String url = "";
+        service.fromURL(url);
     }
 
     /**
