@@ -15,9 +15,12 @@ public class IngredientMatcher {
 
     /**
      * A regular expression capable of parsing most ingredient descriptions so that amount, unit and name of the
-     * ingredient can be extracted. The first group also matches simple fractions.
+     * ingredient can be extracted. The first group also matches simple fractions. Something to look out for:
+     *
+     * (?:(...+)?) <- allows us to optionally match the first group. This allows us to match ingredients without amount
+     * like "Salt & Pepper".
      */
-    private static final String INGREDIENT_REGEX = "([\\/\\d½¼¾\\s]+)\\s?(\\w+)(.*)?";
+    private static final String INGREDIENT_REGEX = "(?:([\\/\\d½¼¾\\s]+)?)\\s?(\\w+)(.*)?";
     private static final Pattern INGREDIENT_PATTERN = Pattern.compile(INGREDIENT_REGEX);
 
     private final IngredientUnitLookup ingredientUnitLookup;
@@ -43,7 +46,7 @@ public class IngredientMatcher {
             return new IngredientMatcherResult(false);
         }
 
-        String rawAmount = matcher.group(1).trim();
+        String rawAmount = matchRawAmount(matcher);
         String rawUnit = matcher.group(2).trim();
         String rawName = matcher.group(3).trim();
 
@@ -59,6 +62,21 @@ public class IngredientMatcher {
         }
 
         return new IngredientMatcherResult(rawAmount, unit, rawName);
+    }
+
+    /**
+     * Due to the nature of the regular expression the first group might return nothing which means we need to take a bit
+     * more care here.
+     * @param matcher The matcher to extract the amount from.
+     * @return An empty string if the amount group was not matched or the result without surrounding whitespace.
+     */
+    private String matchRawAmount(Matcher matcher) {
+        String amountGroup = matcher.group(1);
+        if (amountGroup == null) {
+            return "";
+        }
+
+        return amountGroup.trim();
     }
 
     /**

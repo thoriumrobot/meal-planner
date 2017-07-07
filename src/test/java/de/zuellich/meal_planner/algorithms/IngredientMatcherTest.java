@@ -86,4 +86,12 @@ public class IngredientMatcherTest {
         assertEquals("", matcherResult.getName());
     }
 
+    @Test
+    public void canMatchWithoutAmountAndUnit() {
+        IngredientMatcher.IngredientMatcherResult matcherResult = matcher.match("Salt & pepper");
+        assertEquals("", matcherResult.getAmount());
+        assertEquals(IngredientUnit.NULL, matcherResult.getUnit());
+        assertEquals("Salt & pepper", matcherResult.getName());
+    }
+
 }
