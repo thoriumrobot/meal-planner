@@ -2,7 +2,9 @@ package de.zuellich.meal_planner.algorithms;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +13,7 @@ import java.util.Map;
 @Service
 public class AmountParser {
 
+    private static final List<String> UNICODE_FRACTIONS = Arrays.asList(new String[] { "½", "¼", "¾" });
     /**
      * Stores values for basic fractions like 1/4.
      */
@@ -20,8 +23,11 @@ public class AmountParser {
         fractionLookup = new HashMap<>(4);
         fractionLookup.put("1/8", 0.125f);
         fractionLookup.put("1/4", 0.25f);
+        fractionLookup.put("¼", 0.25f);
         fractionLookup.put("1/2", 0.5f);
+        fractionLookup.put("½", 0.5f);
         fractionLookup.put("3/4", 0.75f);
+        fractionLookup.put("¾", 0.75f);
     }
 
     /**
@@ -36,7 +42,7 @@ public class AmountParser {
             return 0;
         }
 
-        if (raw.contains("/")) {
+        if (raw.contains("/") || UNICODE_FRACTIONS.contains(raw)) {
             return resolveFraction(raw);
         } else {
             return Float.parseFloat(raw);

@@ -68,6 +68,12 @@ public class IngredientMatcherTest {
         assertEquals("1 1/2", matcherResult.getAmount());
         assertEquals(IngredientUnit.CUP, matcherResult.getUnit());
         assertEquals("water", matcherResult.getName());
+
+        matcherResult = matcher.match("½ cup Dijon mustard");
+
+        assertEquals("½", matcherResult.getAmount());
+        assertEquals(IngredientUnit.CUP, matcherResult.getUnit());
+        assertEquals("Dijon mustard", matcherResult.getName());
     }
 
     @Test

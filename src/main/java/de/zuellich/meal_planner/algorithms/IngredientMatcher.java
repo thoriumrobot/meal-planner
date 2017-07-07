@@ -17,7 +17,7 @@ public class IngredientMatcher {
      * A regular expression capable of parsing most ingredient descriptions so that amount, unit and name of the
      * ingredient can be extracted. The first group also matches simple fractions.
      */
-    private static final String INGREDIENT_REGEX = "([\\/\\d\\s]+)\\s?(\\w+)(.*)?";
+    private static final String INGREDIENT_REGEX = "([\\/\\d½¼¾\\s]+)\\s?(\\w+)(.*)?";
     private static final Pattern INGREDIENT_PATTERN = Pattern.compile(INGREDIENT_REGEX);
 
     private final IngredientUnitLookup ingredientUnitLookup;
