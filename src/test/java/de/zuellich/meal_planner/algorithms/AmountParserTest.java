@@ -49,4 +49,14 @@ public class AmountParserTest {
         assertEquals(0.25f, instance.parseAmount("¼"), 0);
         assertEquals(0.75f, instance.parseAmount("¾"), 0);
     }
+
+    @Test
+    public void canHandleMixedUnicodeFractions() {
+        assertEquals(3.5f, instance.parseAmount("3 ½"), 0);
+    }
+
+    @Test
+    public void gracefullyHandleNumberFormatException() {
+        assertEquals(0f, instance.parseAmount("Not a number."), 0);
+    }
 }
