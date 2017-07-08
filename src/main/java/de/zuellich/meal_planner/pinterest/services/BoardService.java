@@ -1,9 +1,6 @@
 package de.zuellich.meal_planner.pinterest.services;
 
-import de.zuellich.meal_planner.pinterest.datatypes.Board;
-import de.zuellich.meal_planner.pinterest.datatypes.BoardList;
-import de.zuellich.meal_planner.pinterest.datatypes.Pin;
-import de.zuellich.meal_planner.pinterest.datatypes.PinList;
+import de.zuellich.meal_planner.pinterest.datatypes.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +20,8 @@ public class BoardService {
     public final String USERS_BOARDS = "https://api.pinterest.com/v1/me/boards?access_token={token}";
 
     public final String BOARDS_PINS = "https://api.pinterest.com/v1/boards/{id}/pins/?fields=id,link&access_token={token}";
+
+    private static final String GET_BOARD = "https://api.pinterest.com/v1/boards/{id}/?fields=id,name,url&access_token={token}";
 
     private RestTemplate restTemplate;
 
@@ -50,5 +49,22 @@ public class BoardService {
 
         ResponseEntity<PinList> pins = restTemplate.getForEntity(BOARDS_PINS, PinList.class, requestParameter);
         return pins.getBody().getPins();
+    }
+
+    /**
+     * Retrieve a listing of the boards basic properties and its pins.
+     * @param boardId The board to retrieve.
+     * @param accessToken The access token to use.
+     * @return The listing.
+     */
+    public BoardListing getBoardListing(String boardId, String accessToken) {
+        ResponseEntity<BoardRequest> board = restTemplate.getForEntity(GET_BOARD, BoardRequest.class, boardId, accessToken);
+        List<Pin> pins = getPins(boardId, accessToken);
+
+        BoardListing result = new BoardListing();
+        result.setBoard(board.getBody().getBoard());
+        result.setPins(pins);
+
+        return result;
     }
 }
