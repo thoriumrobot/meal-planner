@@ -16,7 +16,7 @@ public class IngredientMatcher {
     /**
      * A regular expression capable of parsing most ingredient descriptions so that amount, unit and name of the
      * ingredient can be extracted. The first group also matches simple fractions. Something to look out for:
-     *
+     * <p>
      * (?:(...+)?) <- allows us to optionally match the first group. This allows us to match ingredients without amount
      * like "Salt & Pepper".
      */
@@ -36,6 +36,7 @@ public class IngredientMatcher {
     /**
      * Try to match the given description. If the match operation was not successful only empty values will be returned
      * from the result. An empty result might be an empty string or for primitive values their initial value.
+     *
      * @param description The ingredient description.
      * @return The result.
      */
@@ -67,6 +68,7 @@ public class IngredientMatcher {
     /**
      * Due to the nature of the regular expression the first group might return nothing which means we need to take a bit
      * more care here.
+     *
      * @param matcher The matcher to extract the amount from.
      * @return An empty string if the amount group was not matched or the result without surrounding whitespace.
      */
@@ -82,6 +84,7 @@ public class IngredientMatcher {
     /**
      * Try to match the unit already and if not move it to the name. Might look like we mix up some responsibilities
      * here and it's true, but right now it's the most efficient way that comes to my mind and that yields good results.
+     *
      * @param rawUnit The raw representation of the unit.
      * @return IngredientUnit.NULL if could not be found.
      */

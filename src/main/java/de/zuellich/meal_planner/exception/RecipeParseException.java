@@ -1,7 +1,5 @@
 package de.zuellich.meal_planner.exception;
 
-import java.io.IOException;
-
 /**
  *
  */

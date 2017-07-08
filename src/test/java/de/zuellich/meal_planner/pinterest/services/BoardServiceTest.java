@@ -1,27 +1,22 @@
 package de.zuellich.meal_planner.pinterest.services;
 
 import de.zuellich.meal_planner.FixtureBasedTest;
-import de.zuellich.meal_planner.MealPlanner;
 import de.zuellich.meal_planner.pinterest.datatypes.Board;
 import de.zuellich.meal_planner.pinterest.datatypes.Pin;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -32,6 +27,7 @@ public class BoardServiceTest extends FixtureBasedTest {
 
     /**
      * Get a ready set up instance of the BoardService.
+     *
      * @param restTemplate The RestTemplate instance to inject.
      * @return The service instance.
      */

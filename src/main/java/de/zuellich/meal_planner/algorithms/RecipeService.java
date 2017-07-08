@@ -23,6 +23,7 @@ public class RecipeService {
 
     /**
      * Try to fetch the recipe from the URL and create a response.
+     *
      * @param url The URL to fetch the recipe from.
      * @return A response that either is the recipe or an error.
      */

@@ -10,10 +10,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * This IngredientScanner implements a specific quirk found on some websites. Instead of itemprop="recipeIngredient"
  * they use itemprop="ingredients".

@@ -2,7 +2,6 @@ package de.zuellich.meal_planner.pinterest.datatypes;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.zuellich.meal_planner.pinterest.datatypes.Pin;
 
 import java.util.List;
 

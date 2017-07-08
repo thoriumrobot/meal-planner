@@ -17,7 +17,7 @@ import java.io.IOException;
  * This test requires PowerMock in order to mock {@link Jsoup::connect}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( {Jsoup.class} )
+@PrepareForTest({Jsoup.class})
 public class RecipeFetcherServiceTest extends FixtureBasedTest {
 
     @Test

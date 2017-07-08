@@ -1,6 +1,5 @@
 package de.zuellich.meal_planner.controller;
 
-import de.zuellich.meal_planner.algorithms.RecipeFetcherService;
 import de.zuellich.meal_planner.algorithms.RecipeService;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import org.apache.commons.validator.routines.UrlValidator;
@@ -9,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 /**
  * Controller handles the endpoint for parsing raw recipes.

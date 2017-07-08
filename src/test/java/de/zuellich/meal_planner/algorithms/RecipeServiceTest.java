@@ -5,16 +5,11 @@ import de.zuellich.meal_planner.algorithms.schema_org.SchemaOrgParser;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.exception.RecipeParseException;
 import de.zuellich.meal_planner.expectations.SchemaOrgExpectations;
-import org.jsoup.Jsoup;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,6 +51,7 @@ public class RecipeServiceTest extends FixtureBasedTest {
 
     /**
      * Get a mocked parser factory that resolves the expected recipe.
+     *
      * @param expected
      * @return
      */

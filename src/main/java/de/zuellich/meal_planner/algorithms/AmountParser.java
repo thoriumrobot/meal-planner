@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class AmountParser {
 
-    private static final List<String> UNICODE_FRACTIONS = Arrays.asList(new String[] { "½", "¼", "¾" });
+    private static final List<String> UNICODE_FRACTIONS = Arrays.asList(new String[]{"½", "¼", "¾"});
     /**
      * Stores values for basic fractions like 1/4.
      */

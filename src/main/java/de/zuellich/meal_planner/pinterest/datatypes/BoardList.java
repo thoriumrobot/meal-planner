@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class BoardList {
 
-    @JsonProperty(value="data")
+    @JsonProperty(value = "data")
     private List<Board> boards;
 
     public List<Board> getBoards() {
