@@ -2,7 +2,9 @@ package de.zuellich.meal_planner.algorithms;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +13,7 @@ import java.util.Map;
 @Service
 public class AmountParser {
 
+    private static final List<String> UNICODE_FRACTIONS = Arrays.asList("½", "¼", "¾");
     /**
      * Stores values for basic fractions like 1/4.
      */
@@ -20,9 +23,14 @@ public class AmountParser {
         fractionLookup = new HashMap<>(4);
         fractionLookup.put("1/8", 0.125f);
         fractionLookup.put("1/4", 0.25f);
+        fractionLookup.put("¼", 0.25f);
         fractionLookup.put("1/2", 0.5f);
+        fractionLookup.put("½", 0.5f);
         fractionLookup.put("3/4", 0.75f);
+        fractionLookup.put("¾", 0.75f);
     }
+
+    public static final String CONTAINS_DIGITS_PATTERN = "\\d\\s?[½¼¾]";
 
     /**
      * Convert the string value into a float value. Can resolve very basic fractions. If the fraction
@@ -36,11 +44,42 @@ public class AmountParser {
             return 0;
         }
 
-        if (raw.contains("/")) {
+        boolean containsUnicodeFractions = containsUnicodeFractions(raw);
+        if (raw.contains("/") || containsUnicodeFractions) {
             return resolveFraction(raw);
         } else {
-            return Float.parseFloat(raw);
+            return gracefullyParseFloat(raw);
         }
+    }
+
+    /**
+     * Parse the float without raising exceptions due to format problems.
+     * @param raw The string to parse as float.
+     * @return In case the number format is unexpected 0 is returned.
+     */
+    private float gracefullyParseFloat(String raw) {
+        try {
+            return Float.parseFloat(raw);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Check if the given string contains unicode fractions.
+     * @param raw The string to check.
+     * @return True if there are unicode fractions, false if not.
+     */
+    private boolean containsUnicodeFractions(String raw) {
+        for (String unicodeSymbol : UNICODE_FRACTIONS) {
+            boolean containsUnicode = raw.contains(unicodeSymbol);
+            if (containsUnicode) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -50,6 +89,21 @@ public class AmountParser {
      * @return The value of the fraction or 0.
      */
     private float resolveFraction(String raw) {
+        boolean isMixedFraction = raw.matches(CONTAINS_DIGITS_PATTERN);
+
+        if (!isMixedFraction) {
+            return parsePrimitiveFraction(raw);
+        }
+
+        return parseMixedUnicodeFraction(raw);
+    }
+
+    /**
+     * Try to convert the given primitive fraction, e.g. "1/2" to a float value.
+     * @param raw The raw string to parse.
+     * @return 0 if no fraction representation could be found.
+     */
+    private float parsePrimitiveFraction(String raw) {
         Float value = fractionLookup.get(raw);
 
         if (value == null) {
@@ -58,4 +112,25 @@ public class AmountParser {
             return value;
         }
     }
+
+    /**
+     * Try and parse the string containing a mixed unicode fraction.
+     * @param raw The raw string to parse.
+     * @return The float that was calculated.
+     */
+    private float parseMixedUnicodeFraction(String raw) {
+        String withoutUnicodeFraction = "0";
+        String usedFraction = "";
+
+        for (String unicodeFraction : UNICODE_FRACTIONS) {
+            if (raw.contains(unicodeFraction)) {
+                withoutUnicodeFraction = raw.replace(unicodeFraction, "");
+                usedFraction = unicodeFraction;
+                break;
+            }
+        }
+
+        return Float.parseFloat(withoutUnicodeFraction) + fractionLookup.get(usedFraction);
+    }
+
 }

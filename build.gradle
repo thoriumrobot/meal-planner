@@ -36,7 +36,9 @@ dependencies {
     testCompile(
             [group: 'junit', name: 'junit', version: '4.+'],
             ['org.springframework.boot:spring-boot-starter-test'],
-            'org.mockito:mockito-core:2.+'
+            'org.mockito:mockito-core:2.+',
+            'org.powermock:powermock-module-junit4:1.+',
+            'org.powermock:powermock-api-mockito2:1.+'
     )
 }
 
