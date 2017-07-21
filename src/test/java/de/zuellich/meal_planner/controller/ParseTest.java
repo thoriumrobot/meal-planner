@@ -1,6 +1,8 @@
 package de.zuellich.meal_planner.controller;
 
 import de.zuellich.meal_planner.MealPlanner;
+import de.zuellich.meal_planner.SSLUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -27,6 +31,11 @@ public class ParseTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    @Before
+    public void disableSSLCertificateValidation() throws KeyManagementException, NoSuchAlgorithmException {
+        SSLUtil.turnOffSslChecking();
+    }
 
     @Test
     public void acceptsAURLParameter() {
@@ -53,6 +62,6 @@ public class ParseTest {
      * @return The constructed URL.
      */
     private String getURL(String append) {
-        return "http://localhost:" + port + append;
+        return "https://localhost:" + port + append;
     }
 }
