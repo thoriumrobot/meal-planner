@@ -40,7 +40,9 @@ public class ParseTest {
     @Test
     public void acceptsAURLParameter() {
         String url = getURL("/parse");
-        ResponseEntity<Map> entity = testRestTemplate.getForEntity(url, Map.class);
+        ResponseEntity<Map> entity = testRestTemplate
+                .withBasicAuth("test", "test")
+                .getForEntity(url, Map.class);
         then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
         url = getURL("/parse?url=http%3A%2F%2Fexample.com");
@@ -51,7 +53,9 @@ public class ParseTest {
     @Test
     public void respondsWithErrorWhenNotAValidURL() {
         String url = getURL("/parse?url=test");
-        ResponseEntity<Map> entity = testRestTemplate.getForEntity(url, Map.class);
+        ResponseEntity<Map> entity = testRestTemplate
+                .withBasicAuth("test", "test")
+                .getForEntity(url, Map.class);
         then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
