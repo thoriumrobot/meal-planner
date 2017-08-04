@@ -1,6 +1,10 @@
 description = 'A meal planner application backend.'
 version = '1.0'
 
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+
 buildscript {
     repositories {
         mavenCentral()
@@ -11,13 +15,13 @@ buildscript {
     }
 }
 
+test {
+    systemProperty "spring.profiles.active", "testing"
+}
+
 repositories {
     mavenCentral()
 }
-
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-
 
 jar {
     baseName = 'meal-planner-app'
