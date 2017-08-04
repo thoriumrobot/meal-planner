@@ -16,7 +16,7 @@ buildscript {
 }
 
 test {
-    systemProperty "spring.profiles.active", "testing"
+    systemProperty "spring.profiles.active", "default,testing"
 }
 
 repositories {

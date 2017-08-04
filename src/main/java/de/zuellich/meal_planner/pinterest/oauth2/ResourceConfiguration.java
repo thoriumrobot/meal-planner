@@ -16,7 +16,6 @@ import java.util.Collections;
 
 @Configuration
 @EnableOAuth2Client
-@PropertySource("classpath:meal_planner.properties")
 public class ResourceConfiguration {
 
     @Value("${meal_planner.oauth2.clientId}")
@@ -56,7 +55,7 @@ public class ResourceConfiguration {
      * @return A new rest template that can be used to make requests to protected resources.
      */
     @Bean("pinterestRestTemplate")
-    @Profile("default")
+    @Profile("production")
     public OAuth2RestTemplate pinterestRestTemplate(OAuth2ClientContext clientContext) {
         return new OAuth2RestTemplate(pinterestOAuth2Configuration(), clientContext);
     }

@@ -8,4 +8,5 @@ A little prototype for an application idea. Doesn't work properly (yet).
 
 1. Create an app on Pinterest.
 2. Create a properties file based on the template *src/main/resources/meal_planner.properties.template*.
-3. Retrieve the _client id_ and _client secret_ and add it to your configuration *src/main/resources/meal_planner.properties*.
+3. Retrieve the _client id_ and _client secret_ and add it to your configuration *src/main/resources/application-production.properties*.
+4. *Make sure to activate the default profile and one of testing or production.*

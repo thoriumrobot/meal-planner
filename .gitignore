@@ -2,5 +2,5 @@
 .idea
 .gradle
 build
-src/main/resources/meal_planner.properties
+src/main/resources/application-production.properties
 
