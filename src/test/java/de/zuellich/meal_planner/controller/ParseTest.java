@@ -1,6 +1,8 @@
 package de.zuellich.meal_planner.controller;
 
 import de.zuellich.meal_planner.MealPlanner;
+import de.zuellich.meal_planner.SSLUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -28,10 +32,17 @@ public class ParseTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @Before
+    public void disableSSLCertificateValidation() throws KeyManagementException, NoSuchAlgorithmException {
+        SSLUtil.turnOffSslChecking();
+    }
+
     @Test
     public void acceptsAURLParameter() {
         String url = getURL("/parse");
-        ResponseEntity<Map> entity = testRestTemplate.getForEntity(url, Map.class);
+        ResponseEntity<Map> entity = testRestTemplate
+                .withBasicAuth("test", "test")
+                .getForEntity(url, Map.class);
         then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
         url = getURL("/parse?url=http%3A%2F%2Fexample.com");
@@ -42,7 +53,9 @@ public class ParseTest {
     @Test
     public void respondsWithErrorWhenNotAValidURL() {
         String url = getURL("/parse?url=test");
-        ResponseEntity<Map> entity = testRestTemplate.getForEntity(url, Map.class);
+        ResponseEntity<Map> entity = testRestTemplate
+                .withBasicAuth("test", "test")
+                .getForEntity(url, Map.class);
         then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
@@ -53,6 +66,6 @@ public class ParseTest {
      * @return The constructed URL.
      */
     private String getURL(String append) {
-        return "http://localhost:" + port + append;
+        return "https://localhost:" + port + append;
     }
 }
