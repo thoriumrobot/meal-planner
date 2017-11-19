@@ -40,14 +40,14 @@ dependencies {
             'org.jsoup:jsoup:1.10.2',
             'org.springframework.boot:spring-boot-starter-web',
             'commons-validator:commons-validator:1.+',
-            'org.springframework.security.oauth:spring-security-oauth2:2.1.1.RELEASE'
+            'org.springframework.security.oauth:spring-security-oauth2:2.1.1.RELEASE',
     )
     testCompile(
-            [group: 'junit', name: 'junit', version: '4.+'],
-            ['org.springframework.boot:spring-boot-starter-test'],
-            'org.mockito:mockito-core:2.+',
+            'junit:junit:4.+',
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.mockito:mockito-core:2.8.9',
             'org.powermock:powermock-module-junit4:1.+',
-            'org.powermock:powermock-api-mockito2:1.+'
+            'org.powermock:powermock-api-mockito2:1.7.+'
     )
 }
 
