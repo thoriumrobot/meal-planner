@@ -21,6 +21,7 @@ public class Pin {
     /**
      * The URL to the pinned page.
      */
+    @JsonProperty("original_link")
     private String link;
 
     private String note;

@@ -78,4 +78,11 @@ public class BoardServicePinsTest extends FixtureBasedTest {
         Pin pin = pins.get(0);
         assertEquals("Irischer Rindfleischeintopf mit Guinness", pin.getName());
     }
+
+    @Test
+    public void returnsOriginalLinkAsLinkFromPin() {
+        List<Pin> pins = this.service.getPins("exampleBoard");
+        Pin pin = pins.get(0);
+        assertEquals("https://www.springlane.de/magazin/rezeptideen/irischer-rindfleischeintopf-mit-guinness/?utm_source=pinterest&utm_medium=social&utm_campaign=post", pin.getLink());
+    }
 }
