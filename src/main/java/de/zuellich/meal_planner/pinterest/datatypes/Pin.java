@@ -1,7 +1,10 @@
 package de.zuellich.meal_planner.pinterest.datatypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -20,7 +23,30 @@ public class Pin {
      */
     private String link;
 
+    private String note;
+
+    private String name;
+
     public Pin() {
+    }
+
+    @JsonCreator
+    public Pin(@JsonProperty("metadata") Map<String, Object> metadata) {
+        if (metadata == null || !metadata.containsKey("article")) {
+            this.name = "";
+            return;
+        }
+
+        String name = "";
+        Map<String, Object> article = (Map<String, Object>) metadata.get("article");
+
+        if (article.containsKey("name")) {
+            name = article.get("name").toString();
+        } else {
+            name = "";
+        }
+
+        this.name = name;
     }
 
     public String getId() {
@@ -59,5 +85,21 @@ public class Pin {
                 "id='" + id + '\'' +
                 ", link='" + link + '\'' +
                 '}';
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

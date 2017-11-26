@@ -46,6 +46,11 @@ public class BoardServiceTest extends FixtureBasedTest {
     private static final String ACCESS_TOKEN = "abcdef";
 
     /**
+     * This url is expected to be called to retrieve the pins for a board.
+     */
+    private static final String EXPECTED_URL_FOR_PIN_REQUEST = "https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link,note,metadata";
+
+    /**
      * @return Construct an instance of OAuth2RestTemplate with an access token.
      */
     private OAuth2RestTemplate getRestTemplate() {
@@ -100,7 +105,7 @@ public class BoardServiceTest extends FixtureBasedTest {
 
         OAuth2RestTemplate restTemplate = getRestTemplate();
         MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
-        server.expect(requestTo("https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link"))
+        server.expect(requestTo(EXPECTED_URL_FOR_PIN_REQUEST))
                 .andExpect(method(HttpMethod.GET))
                 .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
                 .andRespond(withSuccess(responseJSON, MediaType.APPLICATION_JSON));
@@ -140,7 +145,7 @@ public class BoardServiceTest extends FixtureBasedTest {
                 .andRespond(withSuccess(boardResponseJSON, MediaType.APPLICATION_JSON));
 
         // now also mock the pin retrieval
-        server.expect(requestTo("https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link"))
+        server.expect(requestTo(EXPECTED_URL_FOR_PIN_REQUEST))
                 .andExpect(method(HttpMethod.GET))
                 .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
                 .andRespond(withSuccess(pinResponseJSON, MediaType.APPLICATION_JSON));
