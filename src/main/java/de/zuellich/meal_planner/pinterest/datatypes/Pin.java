@@ -63,7 +63,8 @@ public class Pin {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Pin pin = (Pin) o;
-    return Objects.equals(getId(), pin.getId()) && Objects.equals(getOriginalLink(), pin.getOriginalLink());
+    return Objects.equals(getId(), pin.getId())
+        && Objects.equals(getOriginalLink(), pin.getOriginalLink());
   }
 
   @Override
