@@ -18,7 +18,7 @@ public class BoardService {
   public final String USERS_BOARDS = "https://api.pinterest.com/v1/me/boards";
 
   public final String BOARDS_PINS =
-      "https://api.pinterest.com/v1/boards/{id}/pins/?fields=id,link,note,metadata";
+      "https://api.pinterest.com/v1/boards/{id}/pins/?fields=id,original_link,note,metadata";
 
   private static final String GET_BOARD =
       "https://api.pinterest.com/v1/boards/{id}/?fields=id,name,url";

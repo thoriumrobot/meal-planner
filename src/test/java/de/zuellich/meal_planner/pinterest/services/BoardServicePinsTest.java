@@ -26,10 +26,6 @@ public class BoardServicePinsTest extends FixtureBasedTest {
 
   private BoardService service;
 
-  /** This url is expected to be called to retrieve the pins for a board. */
-  private static final String EXPECTED_URL_FOR_PIN_REQUEST =
-      "https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link,note";
-
   /** @return Construct an instance of OAuth2RestTemplate with an access token. */
   private OAuth2RestTemplate getRestTemplate() {
     OAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(ACCESS_TOKEN);
@@ -61,7 +57,7 @@ public class BoardServicePinsTest extends FixtureBasedTest {
     server
         .expect(
             requestTo(
-                "https://api.pinterest.com/v1/boards/exampleBoard/pins/?fields=id,link,note,metadata"))
+                "https://api.pinterest.com/v1/boards/exampleBoard/pins/?fields=id,original_link,note,metadata"))
         .andExpect(method(HttpMethod.GET))
         .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
         .andRespond(withSuccess(pinResponseJSON, MediaType.APPLICATION_JSON));
@@ -82,6 +78,6 @@ public class BoardServicePinsTest extends FixtureBasedTest {
     Pin pin = pins.get(0);
     assertEquals(
         "https://www.springlane.de/magazin/rezeptideen/irischer-rindfleischeintopf-mit-guinness/?utm_source=pinterest&utm_medium=social&utm_campaign=post",
-        pin.getLink());
+        pin.getOriginalLink());
   }
 }

@@ -52,11 +52,11 @@ public class PinterestExplorer {
 
       for (Pin pin : pins) {
         try {
-          System.out.println("\r:: Download pin < " + pin.getLink() + " >");
-          Recipe recipe = recipeService.fromURL(pin.getLink());
+          System.out.println("\r:: Download pin < " + pin.getOriginalLink() + " >");
+          Recipe recipe = recipeService.fromURL(pin.getOriginalLink());
 
           if (recipe.getSource().isEmpty()) {
-            recipe.setSource(pin.getLink());
+            recipe.setSource(pin.getOriginalLink());
           }
 
           recipes.add(recipe);

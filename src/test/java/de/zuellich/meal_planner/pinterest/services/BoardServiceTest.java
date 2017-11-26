@@ -1,6 +1,5 @@
 package de.zuellich.meal_planner.pinterest.services;
 
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
@@ -29,7 +28,7 @@ public class BoardServiceTest extends FixtureBasedTest {
 
   /** This url is expected to be called to retrieve the pins for a board. */
   private static final String EXPECTED_URL_FOR_PIN_REQUEST =
-      "https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,link,note,metadata";
+      "https://api.pinterest.com/v1/boards/111111111111111111/pins/?fields=id,original_link,note,metadata";
 
   /** @return Construct an instance of OAuth2RestTemplate with an access token. */
   private OAuth2RestTemplate getRestTemplate() {
@@ -107,7 +106,7 @@ public class BoardServiceTest extends FixtureBasedTest {
   private void assertPinsNotEmptyOrNull(List<Pin> pins) {
     for (Pin pin : pins) {
       assertFalse("Pin's id should be set.", pin.getId().isEmpty());
-      assertFalse("Pin's link should be set.", pin.getLink().isEmpty());
+      assertFalse("Pin's link should be set.", pin.getOriginalLink().isEmpty());
     }
   }
 

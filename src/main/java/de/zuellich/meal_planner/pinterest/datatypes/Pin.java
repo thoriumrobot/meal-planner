@@ -15,7 +15,7 @@ public class Pin {
 
   /** The URL to the pinned page. */
   @JsonProperty("original_link")
-  private String link;
+  private String originalLink;
 
   private String note;
 
@@ -50,12 +50,12 @@ public class Pin {
     this.id = id;
   }
 
-  public String getLink() {
-    return link;
+  public String getOriginalLink() {
+    return originalLink;
   }
 
-  public void setLink(String link) {
-    this.link = link;
+  public void setOriginalLink(String originalLink) {
+    this.originalLink = originalLink;
   }
 
   @Override
@@ -63,17 +63,17 @@ public class Pin {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Pin pin = (Pin) o;
-    return Objects.equals(getId(), pin.getId()) && Objects.equals(getLink(), pin.getLink());
+    return Objects.equals(getId(), pin.getId()) && Objects.equals(getOriginalLink(), pin.getOriginalLink());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getLink());
+    return Objects.hash(getId(), getOriginalLink());
   }
 
   @Override
   public String toString() {
-    return "Pin{" + "id='" + id + '\'' + ", link='" + link + '\'' + '}';
+    return "Pin{" + "id='" + id + '\'' + ", originalLink='" + originalLink + '\'' + '}';
   }
 
   public String getNote() {
