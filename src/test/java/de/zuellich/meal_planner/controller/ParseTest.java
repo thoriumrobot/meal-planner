@@ -1,7 +1,12 @@
 package de.zuellich.meal_planner.controller;
 
+import static org.assertj.core.api.BDDAssertions.then;
+
 import de.zuellich.meal_planner.MealPlanner;
 import de.zuellich.meal_planner.SSLUtil;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,59 +18,51 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-
-import static org.assertj.core.api.BDDAssertions.then;
-
-/**
- *
- */
+/** */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MealPlanner.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+  classes = MealPlanner.class,
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 public class ParseTest {
 
-    @LocalServerPort
-    private int port;
+  @LocalServerPort private int port;
 
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+  @Autowired private TestRestTemplate testRestTemplate;
 
-    @Before
-    public void disableSSLCertificateValidation() throws KeyManagementException, NoSuchAlgorithmException {
-        SSLUtil.turnOffSslChecking();
-    }
+  @Before
+  public void disableSSLCertificateValidation()
+      throws KeyManagementException, NoSuchAlgorithmException {
+    SSLUtil.turnOffSslChecking();
+  }
 
-    @Test
-    public void acceptsAURLParameter() {
-        String url = getURL("/parse");
-        ResponseEntity<Map> entity = testRestTemplate
-                .withBasicAuth("test", "test")
-                .getForEntity(url, Map.class);
-        then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+  @Test
+  public void acceptsAURLParameter() {
+    String url = getURL("/parse");
+    ResponseEntity<Map> entity =
+        testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
+    then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
-        url = getURL("/parse?url=http%3A%2F%2Fexample.com");
-        entity = testRestTemplate.getForEntity(url, Map.class);
-        then(entity.getStatusCode().is2xxSuccessful());
-    }
+    url = getURL("/parse?url=http%3A%2F%2Fexample.com");
+    entity = testRestTemplate.getForEntity(url, Map.class);
+    then(entity.getStatusCode().is2xxSuccessful());
+  }
 
-    @Test
-    public void respondsWithErrorWhenNotAValidURL() {
-        String url = getURL("/parse?url=test");
-        ResponseEntity<Map> entity = testRestTemplate
-                .withBasicAuth("test", "test")
-                .getForEntity(url, Map.class);
-        then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
+  @Test
+  public void respondsWithErrorWhenNotAValidURL() {
+    String url = getURL("/parse?url=test");
+    ResponseEntity<Map> entity =
+        testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
+    then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+  }
 
-    /**
-     * Create a URL by appending the given parameter to the base URL.
-     *
-     * @param append The part to append. Note that the base URL does not contain a trailing slash.
-     * @return The constructed URL.
-     */
-    private String getURL(String append) {
-        return "https://localhost:" + port + append;
-    }
+  /**
+   * Create a URL by appending the given parameter to the base URL.
+   *
+   * @param append The part to append. Note that the base URL does not contain a trailing slash.
+   * @return The constructed URL.
+   */
+  private String getURL(String append) {
+    return "https://localhost:" + port + append;
+  }
 }
