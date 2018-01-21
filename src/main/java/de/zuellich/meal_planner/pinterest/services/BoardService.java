@@ -1,10 +1,7 @@
 package de.zuellich.meal_planner.pinterest.services;
 
 import de.zuellich.meal_planner.pinterest.datatypes.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -19,6 +16,8 @@ public class BoardService {
 
   public final String BOARDS_PINS =
       "https://api.pinterest.com/v1/boards/{id}/pins/?fields=id,original_link,note,metadata";
+
+  public final String BOARDS_PINS_WITH_CURSOR = BOARDS_PINS + "&cursor={cursor}";
 
   private static final String GET_BOARD =
       "https://api.pinterest.com/v1/boards/{id}/?fields=id,name,url";
@@ -43,12 +42,27 @@ public class BoardService {
   }
 
   public List<Pin> getPins(String boardId) {
-    Map<String, String> requestParameter = new HashMap<>(2);
-    requestParameter.put("id", boardId);
+    List<Pin> result = new ArrayList<>();
 
-    ResponseEntity<PinList> pins =
-        restTemplate.getForEntity(BOARDS_PINS, PinList.class, requestParameter);
-    return pins.getBody().getPins();
+    String cursor = null;
+    do {
+      String requestURL = BOARDS_PINS;
+      Map<String, String> requestParameter = new HashMap<>(3);
+      requestParameter.put("id", boardId);
+
+      if (cursor != null && !cursor.isEmpty()) {
+        requestParameter.put("cursor", cursor);
+        requestURL = BOARDS_PINS_WITH_CURSOR;
+      }
+
+      ResponseEntity<PinList> response =
+          restTemplate.getForEntity(requestURL, PinList.class, requestParameter);
+      result.addAll(response.getBody().getPins());
+      cursor = response.getBody().getPage().getCursor();
+
+    } while (cursor != null);
+
+    return result;
   }
 
   /**

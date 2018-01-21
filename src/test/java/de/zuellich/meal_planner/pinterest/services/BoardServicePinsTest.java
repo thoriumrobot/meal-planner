@@ -80,4 +80,34 @@ public class BoardServicePinsTest extends FixtureBasedTest {
         "https://www.springlane.de/magazin/rezeptideen/irischer-rindfleischeintopf-mit-guinness/?utm_source=pinterest&utm_medium=social&utm_campaign=post",
         pin.getOriginalLink());
   }
+
+  @Test
+  public void returnsAllPinsAcrossDifferentPages() {
+    final String boardResponsePage1 =
+        getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor1.json");
+    final String boardResponsePage2 =
+        getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor2.json");
+
+    OAuth2RestTemplate restTemplate = getRestTemplate();
+    MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
+
+    server
+        .expect(
+            requestTo(
+                "https://api.pinterest.com/v1/boards/exampleBoardId/pins/?fields=id,original_link,note,metadata"))
+        .andExpect(method(HttpMethod.GET))
+        .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
+        .andRespond(withSuccess(boardResponsePage1, MediaType.APPLICATION_JSON));
+
+    server
+        .expect(
+            requestTo(
+                "https://api.pinterest.com/v1/boards/exampleBoardId/pins/?fields=id,original_link,note,metadata&cursor=acursor"))
+        .andRespond(withSuccess(boardResponsePage2, MediaType.APPLICATION_JSON));
+
+    BoardService boardService = getBoardService(restTemplate);
+    boardService.getPins("exampleBoardId");
+
+    server.verify();
+  }
 }
