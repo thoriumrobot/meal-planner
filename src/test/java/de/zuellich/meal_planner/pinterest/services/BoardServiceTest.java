@@ -147,5 +147,7 @@ public class BoardServiceTest extends FixtureBasedTest {
 
     assertEquals("5 Pins are returned.", 5, result.getPins().size());
     assertPinsNotEmptyOrNull(result.getPins());
+
+    server.verify();
   }
 }

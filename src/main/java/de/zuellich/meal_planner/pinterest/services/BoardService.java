@@ -58,8 +58,10 @@ public class BoardService {
       ResponseEntity<PinList> response =
           restTemplate.getForEntity(requestURL, PinList.class, requestParameter);
       result.addAll(response.getBody().getPins());
-      cursor = response.getBody().getPage().getCursor();
 
+      if (response.getBody().getPage() != null) {
+        cursor = response.getBody().getPage().getCursor();
+      }
     } while (cursor != null);
 
     return result;
