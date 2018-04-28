@@ -10,10 +10,15 @@ import de.zuellich.meal_planner.pinterest.services.BoardService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 
 /** A controller that allows to explore a users pinterestOAuth2Configuration boards and pins. */
 @RestController
@@ -22,11 +27,22 @@ public class PinterestExplorer {
   private final BoardService service;
 
   private final RecipeService recipeService;
+  private final OAuth2RestTemplate restTemplate;
 
   @Autowired
-  public PinterestExplorer(BoardService service, RecipeService recipeService) {
+  public PinterestExplorer(BoardService service, RecipeService recipeService, OAuth2RestTemplate restTemplate) {
     this.service = service;
     this.recipeService = recipeService;
+    this.restTemplate = restTemplate;
+  }
+
+  @RequestMapping("/connect")
+  public void connect(HttpServletResponse response) {
+    service.getBoards();
+    if (!restTemplate.getAccessToken().isExpired()) {
+      response.setStatus(HttpStatus.FOUND.value());
+      response.setHeader("Location", "https://localhost:8443/resources/web/index.html");
+    }
   }
 
   @RequestMapping("/boards")
