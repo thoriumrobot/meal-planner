@@ -49,7 +49,8 @@ public class IngredientMatcher {
     String rawUnit = matcher.group(2).trim();
     String rawName = matcher.group(3).trim();
 
-    // If we have a string without unit like "1 egg" we match the ingredient name as unit. Reverse this.
+    // If we have a string without unit like "1 egg" we match the ingredient name as unit. Reverse
+    // this.
     if (rawName.isEmpty() && !rawUnit.isEmpty()) {
       rawName = rawUnit;
       rawUnit = "";

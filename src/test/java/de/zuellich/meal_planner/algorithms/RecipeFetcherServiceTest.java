@@ -22,7 +22,8 @@ public class RecipeFetcherServiceTest extends FixtureBasedTest {
     String fixture = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
     String expected = Jsoup.parse(fixture).html();
 
-    // We just want to verify that we get the document as string back. This might not be the best method yet.
+    // We just want to verify that we get the document as string back. This might not be the best
+    // method yet.
     Connection connection = Mockito.mock(Connection.class);
     Mockito.when(connection.get()).thenReturn(Jsoup.parse(fixture));
     PowerMockito.mockStatic(Jsoup.class);

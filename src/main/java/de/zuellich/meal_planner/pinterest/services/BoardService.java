@@ -3,34 +3,36 @@ package de.zuellich.meal_planner.pinterest.services;
 import de.zuellich.meal_planner.pinterest.datatypes.*;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
 /** A service to call the Pinterest Board API. */
 @Service
-public class BoardService {
+public class BoardService implements IBoardService {
 
-  public final String USERS_BOARDS = "https://api.pinterest.com/v1/me/boards";
+  public static final String USERS_BOARDS = "https://api.pinterest.com/v1/me/boards";
 
-  public final String BOARDS_PINS =
+  public static final String BOARDS_PINS =
       "https://api.pinterest.com/v1/boards/{id}/pins/?fields=id,original_link,note,metadata";
 
-  public final String BOARDS_PINS_WITH_CURSOR = BOARDS_PINS + "&cursor={cursor}";
+  public static final String BOARDS_PINS_WITH_CURSOR = BOARDS_PINS + "&cursor={cursor}";
 
   private static final String GET_BOARD =
       "https://api.pinterest.com/v1/boards/{id}/?fields=id,name,url";
 
-  private OAuth2RestTemplate restTemplate;
+  private OAuth2RestOperations restTemplate;
 
   /** @param restTemplate A rest template that manages our OAuth2 access tokens etc. */
   @Autowired
-  public BoardService(OAuth2RestTemplate restTemplate) {
+  public BoardService(OAuth2RestOperations restTemplate) {
     this.restTemplate = restTemplate;
   }
 
-  /** @return A list of the users boards or an empty list of none found. */
+  @Override
+  @Cacheable("boards")
   public List<Board> getBoards() {
     try {
       ResponseEntity<BoardList> boards = restTemplate.getForEntity(USERS_BOARDS, BoardList.class);
@@ -41,6 +43,8 @@ public class BoardService {
     }
   }
 
+  @Override
+  @Cacheable("pins")
   public List<Pin> getPins(String boardId) {
     List<Pin> result = new ArrayList<>();
 
@@ -67,12 +71,8 @@ public class BoardService {
     return result;
   }
 
-  /**
-   * Retrieve a listing of the boards basic properties and its pins.
-   *
-   * @param boardId The board to retrieve.
-   * @return The listing.
-   */
+  @Override
+  @Cacheable("boardListing")
   public BoardListing getBoardListing(String boardId) {
     ResponseEntity<BoardRequest> board =
         restTemplate.getForEntity(GET_BOARD, BoardRequest.class, boardId);

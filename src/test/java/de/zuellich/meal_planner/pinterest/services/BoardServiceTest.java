@@ -45,7 +45,7 @@ public class BoardServiceTest extends FixtureBasedTest {
    * @param restTemplate The RestTemplate instance to inject.
    * @return The service instance.
    */
-  private BoardService getBoardService(OAuth2RestTemplate restTemplate) {
+  private IBoardService getBoardService(OAuth2RestTemplate restTemplate) {
     return new BoardService(restTemplate);
   }
 
@@ -61,7 +61,7 @@ public class BoardServiceTest extends FixtureBasedTest {
         .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
         .andRespond(withSuccess(responseJSON, MediaType.APPLICATION_JSON));
 
-    BoardService service = getBoardService(restTemplate);
+    IBoardService service = getBoardService(restTemplate);
     List<Board> boards = service.getBoards();
 
     server.verify();
@@ -90,7 +90,7 @@ public class BoardServiceTest extends FixtureBasedTest {
         .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
         .andRespond(withSuccess(responseJSON, MediaType.APPLICATION_JSON));
 
-    BoardService service = getBoardService(restTemplate);
+    IBoardService service = getBoardService(restTemplate);
     List<Pin> pins = service.getPins(EXAMPLE_BOARD_ID);
 
     server.verify();
@@ -134,7 +134,7 @@ public class BoardServiceTest extends FixtureBasedTest {
         .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
         .andRespond(withSuccess(pinResponseJSON, MediaType.APPLICATION_JSON));
 
-    BoardService service = getBoardService(restTemplate);
+    IBoardService service = getBoardService(restTemplate);
     BoardListing result = service.getBoardListing(EXAMPLE_BOARD_ID);
 
     Board resultBoard = result.getBoard();

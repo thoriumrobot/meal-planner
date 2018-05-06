@@ -24,7 +24,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 /** */
 public class BoardServicePinsTest extends FixtureBasedTest {
 
-  private BoardService service;
+  private IBoardService service;
 
   /** @return Construct an instance of OAuth2RestTemplate with an access token. */
   private OAuth2RestTemplate getRestTemplate() {
@@ -41,7 +41,7 @@ public class BoardServicePinsTest extends FixtureBasedTest {
    * @param restTemplate The RestTemplate instance to inject.
    * @return The service instance.
    */
-  private BoardService getBoardService(OAuth2RestTemplate restTemplate) {
+  private IBoardService getBoardService(OAuth2RestTemplate restTemplate) {
     return new BoardService(restTemplate);
   }
 
@@ -105,7 +105,7 @@ public class BoardServicePinsTest extends FixtureBasedTest {
                 "https://api.pinterest.com/v1/boards/exampleBoardId/pins/?fields=id,original_link,note,metadata&cursor=acursor"))
         .andRespond(withSuccess(boardResponsePage2, MediaType.APPLICATION_JSON));
 
-    BoardService boardService = getBoardService(restTemplate);
+    IBoardService boardService = getBoardService(restTemplate);
     boardService.getPins("exampleBoardId");
 
     server.verify();
