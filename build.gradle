@@ -1,6 +1,17 @@
 description = 'A meal planner application backend.'
 version = '1.0'
 
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.diffplug.gradle.spotless'
+
+spotless {
+	java {
+		googleJavaFormat()
+
+	}
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -8,16 +19,21 @@ buildscript {
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+	classpath("com.diffplug.spotless:spotless-plugin-gradle:3.10.0")
     }
+}
+
+test {
+    systemProperty "spring.profiles.active", "default,testing"
+}
+
+bootRun {
+    systemProperty "spring.profiles.active", "default,production"
 }
 
 repositories {
     mavenCentral()
 }
-
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-
 
 jar {
     baseName = 'meal-planner-app'
@@ -31,12 +47,15 @@ dependencies {
     compile(
             'org.jsoup:jsoup:1.10.2',
             'org.springframework.boot:spring-boot-starter-web',
-            'commons-validator:commons-validator:1.+'
+            'commons-validator:commons-validator:1.+',
+            'org.springframework.security.oauth:spring-security-oauth2:2.1.1.RELEASE',
     )
     testCompile(
-            [group: 'junit', name: 'junit', version: '4.+'],
-            ['org.springframework.boot:spring-boot-starter-test'],
-            'org.mockito:mockito-core:2.+'
+            'junit:junit:4.+',
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.mockito:mockito-core:2.8.9',
+            'org.powermock:powermock-module-junit4:1.+',
+            'org.powermock:powermock-api-mockito2:1.7.+'
     )
 }
 
