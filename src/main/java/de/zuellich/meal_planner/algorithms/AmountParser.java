@@ -1,9 +1,8 @@
 package de.zuellich.meal_planner.algorithms;
 
+import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.stereotype.Service;
 
 /** */
@@ -12,17 +11,19 @@ public class AmountParser {
 
   private static final List<String> UNICODE_FRACTIONS = Arrays.asList("½", "¼", "¾");
   /** Stores values for basic fractions like 1/4. */
-  private static final Map<String, Float> fractionLookup;
+  private static final ImmutableMap<String, Float> fractionLookup;
 
   static {
-    fractionLookup = new HashMap<>(4);
-    fractionLookup.put("1/8", 0.125f);
-    fractionLookup.put("1/4", 0.25f);
-    fractionLookup.put("¼", 0.25f);
-    fractionLookup.put("1/2", 0.5f);
-    fractionLookup.put("½", 0.5f);
-    fractionLookup.put("3/4", 0.75f);
-    fractionLookup.put("¾", 0.75f);
+    fractionLookup =
+        ImmutableMap.<String, Float>builderWithExpectedSize(7)
+            .put("1/8", 0.125f)
+            .put("1/4", 0.25f)
+            .put("¼", 0.25f)
+            .put("1/2", 0.5f)
+            .put("½", 0.5f)
+            .put("3/4", 0.75f)
+            .put("¾", 0.75f)
+            .build();
   }
 
   public static final String CONTAINS_DIGITS_PATTERN = "\\d\\s?[½¼¾]";
@@ -129,6 +130,6 @@ public class AmountParser {
       }
     }
 
-    return Float.parseFloat(withoutUnicodeFraction) + fractionLookup.get(usedFraction);
+    return Float.parseFloat(withoutUnicodeFraction) + fractionLookup.getOrDefault(usedFraction, 0f);
   }
 }

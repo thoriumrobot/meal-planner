@@ -17,16 +17,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 public class ResourceConfiguration {
 
   @Value("${meal_planner.oauth2.clientId}")
-  private String clientId;
+  private String clientId = "";
 
   @Value("${meal_planner.oauth2.clientSecret}")
-  private String clientSecret;
+  private String clientSecret = "";
 
   @Value("${meal_planner.oauth2.accessTokenUri}")
-  private String accessTokenUri;
+  private String accessTokenUri = "";
 
   @Value("${meal_planner.oauth2.authorizationUri}")
-  private String authorizationUri;
+  private String authorizationUri = "";
 
   /**
    * Configure a OAuth2 interface for Pinterest.

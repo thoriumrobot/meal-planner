@@ -5,11 +5,11 @@ import java.util.Objects;
 /** */
 public class Board {
 
-  private String id;
+  private String id = "";
 
-  private String name;
+  private String name = "";
 
-  private String url;
+  private String url = "";
 
   public String getId() {
     return id;

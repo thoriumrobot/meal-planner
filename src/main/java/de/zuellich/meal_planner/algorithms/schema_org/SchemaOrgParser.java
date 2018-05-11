@@ -26,6 +26,7 @@ public class SchemaOrgParser implements RecipeParser {
     this.ingredientScanner = ingredientScanner;
   }
 
+  @Override
   public Recipe parse(String source) {
     List<Ingredient> ingredientList = ingredientScanner.parse(source);
     Recipe recipe = recipeScanner.parse(source);
@@ -33,6 +34,7 @@ public class SchemaOrgParser implements RecipeParser {
     return recipe;
   }
 
+  @Override
   public RecipeFormat getFormat() {
     return RecipeFormat.SCHEMA_ORG;
   }

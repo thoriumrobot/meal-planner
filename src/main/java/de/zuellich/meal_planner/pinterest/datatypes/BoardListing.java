@@ -1,5 +1,6 @@
 package de.zuellich.meal_planner.pinterest.datatypes;
 
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 /**
@@ -8,23 +9,23 @@ import java.util.List;
  */
 public class BoardListing {
 
-  private Board board;
+  private Board board = new Board();
 
-  private List<Pin> pins;
+  private List<Pin> pins = ImmutableList.of();
 
   public Board getBoard() {
-    return board;
+    return this.board;
   }
 
-  public void setBoard(Board board) {
+  public void setBoard(final Board board) {
     this.board = board;
   }
 
   public List<Pin> getPins() {
-    return pins;
+    return this.pins;
   }
 
-  public void setPins(List<Pin> pins) {
+  public void setPins(final List<Pin> pins) {
     this.pins = pins;
   }
 }

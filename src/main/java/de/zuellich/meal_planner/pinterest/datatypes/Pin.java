@@ -11,35 +11,26 @@ import java.util.Objects;
 public class Pin {
 
   /** Pinterest's unique identifier for this pin. */
-  private String id;
+  private String id = "";
 
   /** The URL to the pinned page. */
   @JsonProperty("original_link")
-  private String originalLink;
+  private String originalLink = "";
 
-  private String note;
+  private String note = "";
 
-  private String name;
+  private String name = "";
 
   public Pin() {}
 
   @JsonCreator
   public Pin(@JsonProperty("metadata") Map<String, Object> metadata) {
     if (metadata == null || !metadata.containsKey("article")) {
-      this.name = "";
       return;
     }
 
-    String name = "";
-    Map<String, Object> article = (Map<String, Object>) metadata.get("article");
-
-    if (article.containsKey("name")) {
-      name = article.get("name").toString();
-    } else {
-      name = "";
-    }
-
-    this.name = name;
+    Map<String, Object> article = (Map<String, Object>) metadata.getOrDefault("article", "");
+    this.name = String.valueOf(article.get("name"));
   }
 
   public String getId() {

@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PagingInformation {
 
-  private String cursor;
+  private String cursor = "";
 
-  private String next;
+  private String next = "";
 
   public String getCursor() {
     return cursor;
