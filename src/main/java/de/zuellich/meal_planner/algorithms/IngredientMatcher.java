@@ -98,7 +98,7 @@ public class IngredientMatcher {
   }
 
   /** Class represents the result of a match operation. */
-  public class IngredientMatcherResult {
+  public static class IngredientMatcherResult {
 
     private final String amount;
 

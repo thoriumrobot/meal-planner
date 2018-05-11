@@ -4,6 +4,7 @@ version = '1.0'
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.diffplug.gradle.spotless'
+apply plugin: 'findbugs'
 
 spotless {
 	java {
@@ -19,7 +20,7 @@ buildscript {
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
-	classpath("com.diffplug.spotless:spotless-plugin-gradle:3.10.0")
+        classpath("com.diffplug.spotless:spotless-plugin-gradle:3.10.0")
     }
 }
 
@@ -40,6 +41,17 @@ jar {
     version = version
 }
 
+findbugs {
+    effort = "max"
+}
+
+tasks.withType(FindBugs) {
+    reports {
+	xml.enabled false
+	html.enabled true
+    }
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -55,7 +67,9 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-test',
             'org.mockito:mockito-core:2.8.9',
             'org.powermock:powermock-module-junit4:1.+',
-            'org.powermock:powermock-api-mockito2:1.7.+'
+            'org.powermock:powermock-api-mockito2:1.7.+',
+            'com.google.truth:truth:0.40',
+            'com.google.truth.extensions:truth-java8-extension:0.40'
     )
 }
 

@@ -45,7 +45,7 @@ public class ParseTest {
 
     url = getURL("/parse?url=http%3A%2F%2Fexample.com");
     entity = testRestTemplate.getForEntity(url, Map.class);
-    then(entity.getStatusCode().is2xxSuccessful());
+    then(entity.getStatusCode().is2xxSuccessful()).isTrue();
   }
 
   @Test
