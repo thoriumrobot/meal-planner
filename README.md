@@ -36,3 +36,5 @@ Returns all the recipes across the list of public boards (see _/boards_).
 **GET** _/parse?url=?_ - Parse a recipe
 
 Parse a recipe by its URL and return information about that recipe (ingredients, name, author).
+
+**GET** _/status_ - Check whether the current user is authenticated with Pinterest.
