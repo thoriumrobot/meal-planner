@@ -3,6 +3,10 @@ package de.zuellich.meal_planner.algorithms;
 import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Service;
 
 /** */
@@ -27,6 +31,7 @@ public class AmountParser {
   }
 
   public static final String CONTAINS_DIGITS_PATTERN = "\\d\\s?[½¼¾]";
+  public static final String IS_RANGE_PATTERN = "(\\d+).?-.?\\d+";
 
   /**
    * Convert the string value into a float value. Can resolve very basic fractions. If the fraction
@@ -35,17 +40,35 @@ public class AmountParser {
    * @param raw The raw value. Might be "1" or "1/8".
    * @return Returns the converted value or in case of an unknown fraction, empty string or null 0.
    */
-  public float parseAmount(String raw) {
+  public float parseAmount(final String raw) {
     if (raw == null || raw.isEmpty()) {
       return 0;
     }
 
-    boolean containsUnicodeFractions = containsUnicodeFractions(raw);
+    final boolean isRange = isRange(raw);
+    if (isRange) {
+      return resolveRange(raw);
+    }
+
+    final boolean containsUnicodeFractions = containsUnicodeFractions(raw);
     if (raw.contains("/") || containsUnicodeFractions) {
       return resolveFraction(raw);
     } else {
       return gracefullyParseFloat(raw);
     }
+  }
+
+  private float resolveRange(final String raw) {
+    final Matcher group = Pattern.compile(IS_RANGE_PATTERN).matcher(raw);
+    if (group.find()) {
+      return parseAmount(group.group(1));
+    }
+
+    return 0;
+  }
+
+  private boolean isRange(final String raw) {
+    return Pattern.compile(IS_RANGE_PATTERN).matcher(raw).matches();
   }
 
   /**
@@ -54,10 +77,10 @@ public class AmountParser {
    * @param raw The string to parse as float.
    * @return In case the number format is unexpected 0 is returned.
    */
-  private float gracefullyParseFloat(String raw) {
+  private float gracefullyParseFloat(final String raw) {
     try {
       return Float.parseFloat(raw);
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       e.printStackTrace();
       return 0;
     }
@@ -69,9 +92,9 @@ public class AmountParser {
    * @param raw The string to check.
    * @return True if there are unicode fractions, false if not.
    */
-  private boolean containsUnicodeFractions(String raw) {
-    for (String unicodeSymbol : UNICODE_FRACTIONS) {
-      boolean containsUnicode = raw.contains(unicodeSymbol);
+  private boolean containsUnicodeFractions(final String raw) {
+    for (final String unicodeSymbol : UNICODE_FRACTIONS) {
+      final boolean containsUnicode = raw.contains(unicodeSymbol);
       if (containsUnicode) {
         return true;
       }
@@ -86,8 +109,8 @@ public class AmountParser {
    * @param raw The raw string like 1/8.
    * @return The value of the fraction or 0.
    */
-  private float resolveFraction(String raw) {
-    boolean isMixedFraction = raw.matches(CONTAINS_DIGITS_PATTERN);
+  private float resolveFraction(final String raw) {
+    final boolean isMixedFraction = raw.matches(CONTAINS_DIGITS_PATTERN);
 
     if (!isMixedFraction) {
       return parsePrimitiveFraction(raw);
@@ -102,8 +125,8 @@ public class AmountParser {
    * @param raw The raw string to parse.
    * @return 0 if no fraction representation could be found.
    */
-  private float parsePrimitiveFraction(String raw) {
-    Float value = fractionLookup.get(raw);
+  private float parsePrimitiveFraction(final String raw) {
+    final Float value = fractionLookup.get(raw);
 
     if (value == null) {
       return 0f;
@@ -118,11 +141,11 @@ public class AmountParser {
    * @param raw The raw string to parse.
    * @return The float that was calculated.
    */
-  private float parseMixedUnicodeFraction(String raw) {
+  private float parseMixedUnicodeFraction(final String raw) {
     String withoutUnicodeFraction = "0";
     String usedFraction = "";
 
-    for (String unicodeFraction : UNICODE_FRACTIONS) {
+    for (final String unicodeFraction : UNICODE_FRACTIONS) {
       if (raw.contains(unicodeFraction)) {
         withoutUnicodeFraction = raw.replace(unicodeFraction, "");
         usedFraction = unicodeFraction;

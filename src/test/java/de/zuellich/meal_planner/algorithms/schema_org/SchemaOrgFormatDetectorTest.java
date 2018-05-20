@@ -1,5 +1,6 @@
 package de.zuellich.meal_planner.algorithms.schema_org;
 
+import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -13,15 +14,19 @@ public class SchemaOrgFormatDetectorTest extends FixtureBasedTest {
 
   @Test
   public void testCanDetectSchemaOrg() {
-    SchemaOrgParser parser = mock(SchemaOrgParser.class);
-    FormatDetector detector = new SchemaOrgFormatDetector(parser);
+    final SchemaOrgParser parser = mock(SchemaOrgParser.class);
+    final FormatDetector detector = new SchemaOrgFormatDetector(parser);
 
     String source = getResource("/fixtures/ingredientScanner/recipes/schema-org-01.html");
-    boolean isSchemaOrgFormatted = detector.isSupported(source);
-    assertTrue("Should recognize standard schema.org format.", isSchemaOrgFormatted);
+    int isSchemaOrgFormatted = detector.isSupported(source);
+    assertWithMessage("Should recognize standard schema.org format and return int > 0")
+        .that(isSchemaOrgFormatted)
+        .isGreaterThan(0);
 
     source = getResource("/fixtures/ingredientScanner/recipes/schema-org-03.html");
     isSchemaOrgFormatted = detector.isSupported(source);
-    assertFalse("Should not recognize quirky schema.org format.", isSchemaOrgFormatted);
+    assertWithMessage("Should recognize quirky schema.org format and return int < 1")
+        .that(isSchemaOrgFormatted)
+        .isLessThan(1);
   }
 }

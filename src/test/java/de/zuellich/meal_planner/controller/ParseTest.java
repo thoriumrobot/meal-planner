@@ -38,21 +38,21 @@ public class ParseTest {
 
   @Test
   public void acceptsAURLParameter() {
-    String url = getURL("/parse");
+    String url = this.getURL("/parse");
     ResponseEntity<Map> entity =
-        testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
+        this.testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
     then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
-    url = getURL("/parse?url=http%3A%2F%2Fexample.com");
-    entity = testRestTemplate.getForEntity(url, Map.class);
-    then(entity.getStatusCode().is2xxSuccessful()).isTrue();
+    url = this.getURL("/parse?url=http%3A%2F%2Fexample.com");
+    entity = this.testRestTemplate.getForEntity(url, Map.class);
+    then(entity.getStatusCode().is2xxSuccessful()).isFalse();
   }
 
   @Test
   public void respondsWithErrorWhenNotAValidURL() {
-    String url = getURL("/parse?url=test");
-    ResponseEntity<Map> entity =
-        testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
+    final String url = this.getURL("/parse?url=test");
+    final ResponseEntity<Map> entity =
+        this.testRestTemplate.withBasicAuth("test", "test").getForEntity(url, Map.class);
     then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
@@ -62,7 +62,7 @@ public class ParseTest {
    * @param append The part to append. Note that the base URL does not contain a trailing slash.
    * @return The constructed URL.
    */
-  private String getURL(String append) {
-    return "https://localhost:" + port + append;
+  private String getURL(final String append) {
+    return "https://localhost:" + this.port + append;
   }
 }

@@ -1,10 +1,13 @@
 package de.zuellich.meal_planner.algorithms;
 
-import static org.junit.Assert.assertEquals;
+import static com.google.common.truth.Truth.assertWithMessage;
+import static com.google.common.truth.Truth8.assertThat;
 
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Optional;
 
 /** */
 public class IngredientUnitLookupTest {
@@ -18,40 +21,39 @@ public class IngredientUnitLookupTest {
 
   @Test
   public void canLookupByUnitShorthand() {
-    IngredientUnit cupUnit = instance.byShorthand(IngredientUnit.CUP.getShorthand());
-    assertEquals(IngredientUnit.CUP, cupUnit);
+    final Optional<IngredientUnit> cupUnit =
+        instance.byShorthand(IngredientUnit.CUP.getShorthand());
+    assertThat(cupUnit).hasValue(IngredientUnit.CUP);
   }
 
   @Test
   public void canLookupByUnitPlural() {
-    IngredientUnit cloveUnit = instance.byPlural(IngredientUnit.CLOVE.getPlural());
-    assertEquals(IngredientUnit.CLOVE, cloveUnit);
+    final Optional<IngredientUnit> cloveUnit = instance.byPlural(IngredientUnit.CLOVE.getPlural());
+    assertThat(cloveUnit).hasValue(IngredientUnit.CLOVE);
   }
 
   @Test
   public void canLookupByUnitSingular() {
-    IngredientUnit teaspoonUnit = instance.bySingular(IngredientUnit.TSP.getSingular());
-    assertEquals(IngredientUnit.TSP, teaspoonUnit);
+    final Optional<IngredientUnit> teaspoonUnit =
+        instance.bySingular(IngredientUnit.TSP.getSingular());
+    assertThat(teaspoonUnit).hasValue(IngredientUnit.TSP);
   }
 
   @Test
   public void canLookupChained() {
-    IngredientUnit unit = instance.lookup(IngredientUnit.CLOVE.getShorthand());
-    assertEquals("Search the shorthand for an ingredient", IngredientUnit.CLOVE, unit);
+    Optional<IngredientUnit> unit = instance.lookup(IngredientUnit.CLOVE.getShorthand());
+    assertWithMessage("Search for the shorthand for an ingredient")
+        .that(com.google.common.base.Optional.fromJavaUtil(unit))
+        .hasValue(IngredientUnit.CLOVE);
 
     unit = instance.lookup(IngredientUnit.CLOVE.getPlural());
-    assertEquals("Search the plural for an ingredient", IngredientUnit.CLOVE, unit);
+    assertWithMessage("Search the plural for an ingredient")
+        .that(com.google.common.base.Optional.fromJavaUtil(unit))
+        .hasValue(IngredientUnit.CLOVE);
 
     unit = instance.lookup(IngredientUnit.TSP.getSingular());
-    assertEquals("Search the singular for an ingredient unit", IngredientUnit.TSP, unit);
-  }
-
-  @Test
-  public void returnNullIngredientUnitInsteadOfNullIfUnitNotRecognized() {
-    IngredientUnit actual = instance.byShorthand("notAnUnitActually");
-    assertEquals("Return NULL object when unit not recognized", IngredientUnit.NULL, actual);
-
-    actual = instance.byPlural("notAnUnitActually");
-    assertEquals("Return NULL object when unit plural not recognized", IngredientUnit.NULL, actual);
+    assertWithMessage("Search the singular for an ingredient unit")
+        .that(com.google.common.base.Optional.fromJavaUtil(unit))
+        .hasValue(IngredientUnit.TSP);
   }
 }

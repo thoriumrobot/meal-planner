@@ -15,17 +15,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchemaOrgFormatDetector implements FormatDetector {
 
-  private RecipeParser parser;
+  private final RecipeParser parser;
 
   @Autowired
-  public SchemaOrgFormatDetector(@Qualifier("schemaOrgParser") SchemaOrgParser parser) {
+  public SchemaOrgFormatDetector(@Qualifier("schemaOrgParser") final SchemaOrgParser parser) {
     this.parser = parser;
   }
 
   @Override
-  public boolean isSupported(String htmlSource) {
-    Document document = Jsoup.parse(htmlSource);
-    return canFindSchemaOrgAnnotation(document);
+  public int isSupported(final String htmlSource) {
+    final Document document = Jsoup.parse(htmlSource);
+    if (canFindSchemaOrgAnnotation(document)) {
+      return BASIC_UNDERSTANDING;
+    } else {
+      return NO_UNDERSTANDING;
+    }
   }
 
   /**
@@ -34,10 +38,10 @@ public class SchemaOrgFormatDetector implements FormatDetector {
    * @param document The recipes as jsoup document.
    * @return True if we found the schema.org recipe annotation.
    */
-  private boolean canFindSchemaOrgAnnotation(Document document) {
-    Elements recipeElement =
+  private boolean canFindSchemaOrgAnnotation(final Document document) {
+    final Elements recipeElement =
         document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
-    Elements ingredientsElement =
+    final Elements ingredientsElement =
         document.getElementsByAttributeValue("itemprop", "recipeIngredient");
     return !recipeElement.isEmpty() && !ingredientsElement.isEmpty();
   }
@@ -53,10 +57,14 @@ public class SchemaOrgFormatDetector implements FormatDetector {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    SchemaOrgFormatDetector that = (SchemaOrgFormatDetector) o;
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    final SchemaOrgFormatDetector that = (SchemaOrgFormatDetector) o;
     return Objects.equals(parser, that.parser);
   }
 

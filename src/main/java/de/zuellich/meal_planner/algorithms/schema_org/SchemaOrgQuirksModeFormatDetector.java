@@ -14,17 +14,22 @@ public class SchemaOrgQuirksModeFormatDetector implements FormatDetector {
 
   private final RecipeParser parser;
 
-  public SchemaOrgQuirksModeFormatDetector(SchemaOrgQuirksModeParser parser) {
+  public SchemaOrgQuirksModeFormatDetector(final SchemaOrgQuirksModeParser parser) {
     this.parser = parser;
   }
 
   @Override
-  public boolean isSupported(String source) {
-    Document document = Jsoup.parse(source);
-    Elements recipeElement =
+  public int isSupported(final String source) {
+    final Document document = Jsoup.parse(source);
+    final Elements recipeElement =
         document.getElementsByAttributeValue("itemtype", "http://schema.org/Recipe");
-    Elements ingredientsElements = document.getElementsByAttributeValue("itemprop", "ingredients");
-    return !recipeElement.isEmpty() && !ingredientsElements.isEmpty();
+    final Elements ingredientsElements =
+        document.getElementsByAttributeValue("itemprop", "ingredients");
+    if (!recipeElement.isEmpty() && !ingredientsElements.isEmpty()) {
+      return ADVANCED_UNDERSTANDING;
+    } else {
+      return NO_UNDERSTANDING;
+    }
   }
 
   @Override

@@ -28,8 +28,8 @@ public class BoardServicePinsTest extends FixtureBasedTest {
 
   /** @return Construct an instance of OAuth2RestTemplate with an access token. */
   private OAuth2RestTemplate getRestTemplate() {
-    OAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(ACCESS_TOKEN);
-    DefaultOAuth2ClientContext clientContext = new DefaultOAuth2ClientContext();
+    final OAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(ACCESS_TOKEN);
+    final DefaultOAuth2ClientContext clientContext = new DefaultOAuth2ClientContext();
     clientContext.setAccessToken(accessToken);
 
     return new OAuth2RestTemplate(new AuthorizationCodeResourceDetails(), clientContext);
@@ -41,17 +41,17 @@ public class BoardServicePinsTest extends FixtureBasedTest {
    * @param restTemplate The RestTemplate instance to inject.
    * @return The service instance.
    */
-  private IBoardService getBoardService(OAuth2RestTemplate restTemplate) {
+  private IBoardService getBoardService(final OAuth2RestTemplate restTemplate) {
     return new BoardService(restTemplate);
   }
 
   @Before
   public void setUp() {
     final String pinResponseJSON =
-        getResource("/fixtures/pinterest/responses/v1/board_pins_with_recipe_name.json");
+        this.getResource("/fixtures/pinterest/responses/v1/board_pins_with_recipe_name.json");
 
-    OAuth2RestTemplate restTemplate = getRestTemplate();
-    MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
+    final OAuth2RestTemplate restTemplate = this.getRestTemplate();
+    final MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
 
     // now also mock the pin retrieval
     server
@@ -62,20 +62,20 @@ public class BoardServicePinsTest extends FixtureBasedTest {
         .andExpect(header("Authorization", "bearer " + ACCESS_TOKEN))
         .andRespond(withSuccess(pinResponseJSON, MediaType.APPLICATION_JSON));
 
-    this.service = getBoardService(restTemplate);
+    this.service = this.getBoardService(restTemplate);
   }
 
   @Test
   public void returnsRecipeNameFromPin() {
-    List<Pin> pins = this.service.getPins("exampleBoard");
-    Pin pin = pins.get(0);
+    final List<Pin> pins = this.service.getPins("exampleBoard");
+    final Pin pin = pins.get(0);
     assertEquals("Irischer Rindfleischeintopf mit Guinness", pin.getName());
   }
 
   @Test
   public void returnsOriginalLinkAsLinkFromPin() {
-    List<Pin> pins = this.service.getPins("exampleBoard");
-    Pin pin = pins.get(0);
+    final List<Pin> pins = this.service.getPins("exampleBoard");
+    final Pin pin = pins.get(0);
     assertEquals(
         "https://www.springlane.de/magazin/rezeptideen/irischer-rindfleischeintopf-mit-guinness/?utm_source=pinterest&utm_medium=social&utm_campaign=post",
         pin.getOriginalLink());
@@ -84,12 +84,12 @@ public class BoardServicePinsTest extends FixtureBasedTest {
   @Test
   public void returnsAllPinsAcrossDifferentPages() {
     final String boardResponsePage1 =
-        getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor1.json");
+        this.getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor1.json");
     final String boardResponsePage2 =
-        getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor2.json");
+        this.getResource("/fixtures/pinterest/responses/v1/board_pins_with_cursor2.json");
 
-    OAuth2RestTemplate restTemplate = getRestTemplate();
-    MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
+    final OAuth2RestTemplate restTemplate = this.getRestTemplate();
+    final MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
 
     server
         .expect(
@@ -105,7 +105,7 @@ public class BoardServicePinsTest extends FixtureBasedTest {
                 "https://api.pinterest.com/v1/boards/exampleBoardId/pins/?fields=id,original_link,note,metadata&cursor=acursor"))
         .andRespond(withSuccess(boardResponsePage2, MediaType.APPLICATION_JSON));
 
-    IBoardService boardService = getBoardService(restTemplate);
+    final IBoardService boardService = this.getBoardService(restTemplate);
     boardService.getPins("exampleBoardId");
 
     server.verify();

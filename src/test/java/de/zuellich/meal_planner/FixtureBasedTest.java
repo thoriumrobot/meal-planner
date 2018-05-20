@@ -1,6 +1,7 @@
 package de.zuellich.meal_planner;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /** A simple base class that allows us to easily parse our expectations. */
@@ -13,11 +14,16 @@ public class FixtureBasedTest {
    *     "/folder-in-resources/file".
    * @return The parsed file or an empty string.
    */
-  public String getResource(String path) {
-    try (InputStream in = FixtureBasedTest.class.getResourceAsStream(path)) {
-      Scanner scanner = new Scanner(in, "UTF-8").useDelimiter("\\A");
+  public String getResource(final String path) {
+
+    try (final InputStream in = FixtureBasedTest.class.getResourceAsStream(path)) {
+      if (in == null) {
+        throw new RuntimeException(String.format("Could not find resource with path %s", path));
+      }
+
+      final Scanner scanner = new Scanner(in, "UTF-8").useDelimiter("\\A");
       return scanner.hasNext() ? scanner.next() : "";
-    } catch (IOException e) {
+    } catch (final IOException e) {
       throw new RuntimeException(e);
     }
   }

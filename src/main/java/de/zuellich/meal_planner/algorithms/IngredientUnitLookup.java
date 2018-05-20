@@ -3,6 +3,7 @@ package de.zuellich.meal_planner.algorithms;
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -53,14 +54,8 @@ public class IngredientUnitLookup {
    * @param shorthand The shorthand to lookup.
    * @return IngredientUnit.NULL if not found.
    */
-  public IngredientUnit byShorthand(final String shorthand) {
-    IngredientUnit result = this.byShorthand.get(shorthand);
-
-    if (result == null) {
-      result = IngredientUnit.NULL;
-    }
-
-    return result;
+  public Optional<IngredientUnit> byShorthand(final String shorthand) {
+    return Optional.ofNullable(byShorthand.get(shorthand));
   }
 
   /**
@@ -69,14 +64,8 @@ public class IngredientUnitLookup {
    * @param plural The string that supposedly is plural.
    * @return IngredientUnit.NULL if not found.
    */
-  public IngredientUnit byPlural(final String plural) {
-    IngredientUnit result = this.byPlural.get(plural);
-
-    if (result == null) {
-      result = IngredientUnit.NULL;
-    }
-
-    return result;
+  public Optional<IngredientUnit> byPlural(final String plural) {
+    return Optional.ofNullable(byPlural.get(plural));
   }
 
   /**
@@ -85,18 +74,16 @@ public class IngredientUnitLookup {
    * @param search The string to search. Can be shorthand or plural.
    * @return IngredientUnit.NULL if not found.
    */
-  public IngredientUnit lookup(final String search) {
-    IngredientUnit result = this.byShorthand(search);
-    if (!result.equals(IngredientUnit.NULL)) {
-      return result;
+  public Optional<IngredientUnit> lookup(final String search) {
+    if (byShorthand(search).isPresent()) {
+      return byShorthand(search);
     }
 
-    result = this.byPlural(search);
-    if (!result.equals(IngredientUnit.NULL)) {
-      return result;
-    } else {
-      return this.bySingular(search);
+    if (byPlural(search).isPresent()) {
+      return byPlural(search);
     }
+
+    return bySingular(search);
   }
 
   /**
@@ -106,13 +93,7 @@ public class IngredientUnitLookup {
    *     for.
    * @return IngredientUnit.NULL if none found.
    */
-  public IngredientUnit bySingular(final String search) {
-    IngredientUnit result = this.bySingular.get(search);
-
-    if (result == null) {
-      result = IngredientUnit.NULL;
-    }
-
-    return result;
+  public Optional<IngredientUnit> bySingular(final String search) {
+    return Optional.ofNullable(bySingular.get(search));
   }
 }

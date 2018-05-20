@@ -26,7 +26,7 @@ public class IngredientMatcher {
 
   /** @param ingredientUnitLookup Used to refine the match result. */
   @Autowired
-  public IngredientMatcher(IngredientUnitLookup ingredientUnitLookup) {
+  public IngredientMatcher(final IngredientUnitLookup ingredientUnitLookup) {
     this.ingredientUnitLookup = ingredientUnitLookup;
   }
 
@@ -38,14 +38,14 @@ public class IngredientMatcher {
    * @param description The ingredient description.
    * @return The result.
    */
-  public IngredientMatcherResult match(String description) {
-    Matcher matcher = INGREDIENT_PATTERN.matcher(description);
-    boolean isMatching = matcher.find();
+  public IngredientMatcherResult match(final String description) {
+    final Matcher matcher = INGREDIENT_PATTERN.matcher(description);
+    final boolean isMatching = matcher.find();
     if (!isMatching) {
       return new IngredientMatcherResult(false);
     }
 
-    String rawAmount = matchRawAmount(matcher);
+    final String rawAmount = matchRawAmount(matcher);
     String rawUnit = matcher.group(2).trim();
     String rawName = matcher.group(3).trim();
 
@@ -56,7 +56,7 @@ public class IngredientMatcher {
       rawUnit = "";
     }
 
-    IngredientUnit unit = tryToMatchUnit(rawUnit);
+    final IngredientUnit unit = tryToMatchUnit(rawUnit);
     if (unit.equals(IngredientUnit.NULL) && !rawUnit.isEmpty()) {
       rawName = rawUnit + " " + rawName;
     }
@@ -72,8 +72,8 @@ public class IngredientMatcher {
    * @return An empty string if the amount group was not matched or the result without surrounding
    *     whitespace.
    */
-  private String matchRawAmount(Matcher matcher) {
-    String amountGroup = matcher.group(1);
+  private String matchRawAmount(final Matcher matcher) {
+    final String amountGroup = matcher.group(1);
     if (amountGroup == null) {
       return "";
     }
@@ -89,12 +89,8 @@ public class IngredientMatcher {
    * @param rawUnit The raw representation of the unit.
    * @return IngredientUnit.NULL if could not be found.
    */
-  private IngredientUnit tryToMatchUnit(String rawUnit) {
-    if (!rawUnit.isEmpty()) {
-      return ingredientUnitLookup.lookup(rawUnit);
-    }
-
-    return IngredientUnit.NULL;
+  private IngredientUnit tryToMatchUnit(final String rawUnit) {
+    return ingredientUnitLookup.lookup(rawUnit).orElse(IngredientUnit.NULL);
   }
 
   /** Class represents the result of a match operation. */
@@ -108,14 +104,15 @@ public class IngredientMatcher {
 
     private final boolean matching;
 
-    public IngredientMatcherResult(boolean isMatching) {
+    public IngredientMatcherResult(final boolean isMatching) {
       this.matching = isMatching;
       this.amount = "";
       this.unit = IngredientUnit.NULL;
       this.name = "";
     }
 
-    public IngredientMatcherResult(String rawAmount, IngredientUnit unit, String rawName) {
+    public IngredientMatcherResult(
+        final String rawAmount, final IngredientUnit unit, final String rawName) {
       this.matching = true;
       this.amount = rawAmount;
       this.unit = unit;

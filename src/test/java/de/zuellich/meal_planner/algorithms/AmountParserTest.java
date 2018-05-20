@@ -1,5 +1,6 @@
 package de.zuellich.meal_planner.algorithms;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -16,45 +17,51 @@ public class AmountParserTest {
   }
 
   @Test
+  public void canHandleRanges() {
+    assertThat(instance.parseAmount("1-2")).isEqualTo(1f);
+    assertThat(instance.parseAmount("15-20")).isEqualTo(15f);
+  }
+
+  @Test
   public void canParseNormalNumber() {
-    assertEquals(1f, instance.parseAmount("1"), 0);
-    assertEquals(2f, instance.parseAmount("2"), 0);
+    assertThat(instance.parseAmount("1")).isEqualTo(1f);
+    assertThat(instance.parseAmount("2")).isEqualTo(2f);
   }
 
   @Test
   public void canHandleNegativeNumbers() {
-    assertEquals(-1f, instance.parseAmount("-1"), 0);
-    assertEquals(-10f, instance.parseAmount("-10"), 0);
+    assertThat(instance.parseAmount("-1")).isEqualTo(-1f);
+    assertThat(instance.parseAmount("-10")).isEqualTo(-10f);
   }
 
   @Test
   public void canHandleBasicFractions() {
-    assertEquals(0.125f, instance.parseAmount("1/8"), 0);
-    assertEquals(0.25f, instance.parseAmount("1/4"), 0);
-    assertEquals(0.5, instance.parseAmount("1/2"), 0);
-    assertEquals(0.75f, instance.parseAmount("3/4"), 0);
+    assertThat(instance.parseAmount("1/8")).isEqualTo(0.125f);
+    assertThat(instance.parseAmount("1/4")).isEqualTo(0.25f);
+    assertThat(instance.parseAmount("1/2")).isEqualTo(0.5f);
+    assertThat(instance.parseAmount("3/4")).isEqualTo(0.75f);
   }
 
   @Test
   public void returnsZeroIfEmptyStringOrNull() {
-    assertEquals(0f, instance.parseAmount(null), 0);
-    assertEquals(0f, instance.parseAmount(""), 0);
+    assertThat(instance.parseAmount(null)).isEqualTo(0f);
+    assertThat(instance.parseAmount("")).isEqualTo(0f);
   }
 
   @Test
   public void canHandleUnicodeVulgarFractions() {
-    assertEquals(0.5f, instance.parseAmount("½"), 0);
-    assertEquals(0.25f, instance.parseAmount("¼"), 0);
-    assertEquals(0.75f, instance.parseAmount("¾"), 0);
+    assertThat(instance.parseAmount("½")).isEqualTo(0.5f);
+    assertThat(instance.parseAmount("¼")).isEqualTo(0.25f);
+    assertThat(instance.parseAmount("¾")).isEqualTo(0.75f);
   }
 
   @Test
   public void canHandleMixedUnicodeFractions() {
-    assertEquals(3.5f, instance.parseAmount("3 ½"), 0);
+    assertThat(instance.parseAmount("3 ½")).isEqualTo(3.5f);
   }
 
   @Test
   public void gracefullyHandleNumberFormatException() {
-    assertEquals(0f, instance.parseAmount("Not a number."), 0);
+    assertThat(instance.parseAmount("Not a number.")).isEqualTo(0f);
   }
 }
