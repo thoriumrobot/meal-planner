@@ -3,13 +3,10 @@ package de.zuellich.meal_planner.algorithms;
 import com.google.common.collect.ImmutableList;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
-import org.jsoup.helper.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /** Implementation of @{@link IngredientScanner} for plain text without any further markup. */
 @Service

@@ -1,16 +1,15 @@
 package de.zuellich.meal_planner.algorithms;
 
-import de.zuellich.meal_planner.datatypes.Ingredient;
-import de.zuellich.meal_planner.datatypes.IngredientUnit;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-import java.util.Optional;
-
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import de.zuellich.meal_planner.datatypes.Ingredient;
+import de.zuellich.meal_planner.datatypes.IngredientUnit;
+import java.util.List;
+import java.util.Optional;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PlainTextIngredientScannerTest {
 

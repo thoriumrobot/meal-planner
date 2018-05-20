@@ -23,11 +23,11 @@ public class BoardService implements IBoardService {
   private static final String GET_BOARD =
       "https://api.pinterest.com/v1/boards/{id}/?fields=id,name,url";
 
-  private OAuth2RestOperations restTemplate;
+  private final OAuth2RestOperations restTemplate;
 
   /** @param restTemplate A rest template that manages our OAuth2 access tokens etc. */
   @Autowired
-  public BoardService(OAuth2RestOperations restTemplate) {
+  public BoardService(final OAuth2RestOperations restTemplate) {
     this.restTemplate = restTemplate;
   }
 
@@ -35,9 +35,10 @@ public class BoardService implements IBoardService {
   @Cacheable("boards")
   public List<Board> getBoards() {
     try {
-      ResponseEntity<BoardList> boards = restTemplate.getForEntity(USERS_BOARDS, BoardList.class);
+      final ResponseEntity<BoardList> boards =
+          restTemplate.getForEntity(USERS_BOARDS, BoardList.class);
       return boards.getBody().getBoards();
-    } catch (RestClientException e) {
+    } catch (final RestClientException e) {
       e.printStackTrace();
       return Collections.emptyList();
     }
@@ -45,40 +46,42 @@ public class BoardService implements IBoardService {
 
   @Override
   @Cacheable("pins")
-  public List<Pin> getPins(String boardId) {
-    List<Pin> result = new ArrayList<>();
+  public List<Pin> getPins(final String boardId) {
+    final List<Pin> result = new ArrayList<>();
 
-    String cursor = null;
+    String cursor = "";
     do {
       String requestURL = BOARDS_PINS;
-      Map<String, String> requestParameter = new HashMap<>(3);
+      final Map<String, String> requestParameter = new HashMap<>(3);
       requestParameter.put("id", boardId);
 
-      if (cursor != null && !cursor.isEmpty()) {
+      if (!cursor.isEmpty()) {
         requestParameter.put("cursor", cursor);
         requestURL = BOARDS_PINS_WITH_CURSOR;
       }
 
-      ResponseEntity<PinList> response =
+      final ResponseEntity<PinList> response =
           restTemplate.getForEntity(requestURL, PinList.class, requestParameter);
       result.addAll(response.getBody().getPins());
 
-      if (response.getBody().getPage() != null) {
+      if (!response.getBody().getPage().getCursor().isEmpty()) {
         cursor = response.getBody().getPage().getCursor();
+      } else {
+        cursor = "";
       }
-    } while (cursor != null);
+    } while (!cursor.isEmpty());
 
     return result;
   }
 
   @Override
   @Cacheable("boardListing")
-  public BoardListing getBoardListing(String boardId) {
-    ResponseEntity<BoardRequest> board =
+  public BoardListing getBoardListing(final String boardId) {
+    final ResponseEntity<BoardRequest> board =
         restTemplate.getForEntity(GET_BOARD, BoardRequest.class, boardId);
-    List<Pin> pins = getPins(boardId);
+    final List<Pin> pins = getPins(boardId);
 
-    BoardListing result = new BoardListing();
+    final BoardListing result = new BoardListing();
     result.setBoard(board.getBody().getBoard());
     result.setPins(pins);
 

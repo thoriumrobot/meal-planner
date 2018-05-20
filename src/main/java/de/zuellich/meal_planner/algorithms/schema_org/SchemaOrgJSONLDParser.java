@@ -9,16 +9,13 @@ import de.zuellich.meal_planner.algorithms.RecipeParser;
 import de.zuellich.meal_planner.datatypes.Ingredient;
 import de.zuellich.meal_planner.datatypes.Recipe;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
+import java.io.IOException;
+import java.util.Iterator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /** */
 @Component

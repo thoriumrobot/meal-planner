@@ -8,7 +8,6 @@ import de.zuellich.meal_planner.datatypes.IngredientUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

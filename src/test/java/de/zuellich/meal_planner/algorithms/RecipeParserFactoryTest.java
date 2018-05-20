@@ -2,7 +2,6 @@ package de.zuellich.meal_planner.algorithms;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,8 +9,6 @@ import com.google.common.collect.ImmutableSet;
 import de.zuellich.meal_planner.FixtureBasedTest;
 import de.zuellich.meal_planner.algorithms.schema_org.*;
 import de.zuellich.meal_planner.datatypes.RecipeFormat;
-import java.util.HashSet;
-import java.util.Set;
 import org.junit.Test;
 
 /** */

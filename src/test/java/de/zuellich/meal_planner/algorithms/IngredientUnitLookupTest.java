@@ -4,10 +4,9 @@ import static com.google.common.truth.Truth.assertWithMessage;
 import static com.google.common.truth.Truth8.assertThat;
 
 import de.zuellich.meal_planner.datatypes.IngredientUnit;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Optional;
 
 /** */
 public class IngredientUnitLookupTest {

@@ -1,8 +1,6 @@
 package de.zuellich.meal_planner.algorithms.schema_org;
 
 import static com.google.common.truth.Truth.assertWithMessage;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import de.zuellich.meal_planner.FixtureBasedTest;

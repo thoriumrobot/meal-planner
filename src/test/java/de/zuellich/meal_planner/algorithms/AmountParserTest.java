@@ -1,7 +1,6 @@
 package de.zuellich.meal_planner.algorithms;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
