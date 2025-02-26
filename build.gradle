@@ -11,25 +11,24 @@ apply plugin: 'net.ltgt.apt'
 spotless {
   java {
     googleJavaFormat()
-
   }
 }
 
 buildscript {
   repositories {
     mavenCentral()
+    // Add Gradle Plugin Portal for net.ltgt plugins, Spotless, etc.
     maven {
-      // Added for net.ltgt.errorprone
       url "https://plugins.gradle.org/m2/"
     }
   }
-
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:3.10.0")
-    classpath("net.ltgt.gradle:gradle-errorprone-plugin:0.0.14")
+    // Updated to a version of net.ltgt.errorprone-plugin known to be on Maven Central:
+    classpath("net.ltgt.gradle:gradle-errorprone-plugin:3.0.1")
+    // If you truly need the apt plugin:
     classpath("net.ltgt.gradle:gradle-apt-plugin:0.15")
-    classpath("com.google.errorprone:error_prone_core:2.3.1")
   }
 }
 
@@ -45,15 +44,16 @@ repositories {
   mavenCentral()
 }
 
+// Configure the jar task
 jar {
   baseName = 'meal-planner-app'
   version = version
 }
 
+// Configure FindBugs
 findbugs {
   effort = "max"
 }
-
 tasks.withType(FindBugs) {
   reports {
     xml.enabled false
@@ -61,18 +61,22 @@ tasks.withType(FindBugs) {
   }
 }
 
+// Use Error Prone + NullAway checks on main Java compilation
 tasks.withType(JavaCompile) {
   if (!name.toLowerCase().contains("test")) {
-    options.compilerArgs += ["-Xep:NullAway:ERROR", "-XepOpt:NullAway:AnnotatedPackages=de.zuellich"]
+    options.compilerArgs += [
+      "-Xep:NullAway:ERROR",
+      "-XepOpt:NullAway:AnnotatedPackages=de.zuellich"
+    ]
   }
 }
 
+// Java 8
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-  annotationProcessor 'com.uber.nullaway:nullaway:0.4.5'
-
+  // ------------ Main dependencies ------------
   compile(
     'org.jsoup:jsoup:1.10.2',
     'org.springframework.boot:spring-boot-starter-web',
@@ -81,9 +85,16 @@ dependencies {
     'com.google.guava:guava:25.0-jre',
     'com.fasterxml.jackson.core:jackson-core:2.9.5'
   )
-  compileOnly(
-    'com.google.code.findbugs:jsr305:3.0.2'
-  )
+  compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+  // ------------ Annotation Processors ------------
+  annotationProcessor 'com.uber.nullaway:nullaway:0.6.4'
+
+  // If using Error Prone with net.ltgt.errorprone plugin, put it here:
+  errorprone "com.google.errorprone:error_prone_core:2.3.1"
+  // ^ You can upgrade to a later version (e.g. 2.17.x) if you like.
+
+  // ------------ Test dependencies ------------
   testCompile(
     'junit:junit:4.+',
     'org.springframework.boot:spring-boot-starter-test',
@@ -94,4 +105,3 @@ dependencies {
     'com.google.truth.extensions:truth-java8-extension:0.40'
   )
 }
-
